@@ -29,7 +29,7 @@
                         <h4 class="mt-0 text-left">Roles List</h4>
                     </div>
                     <div class="col-6 text-right">
-                        <button type="button" class="btn btn-danger mt-0"  onclick="return window.location.href='/roles/create'">Add Role
+                        <button type="button" class="btn btn-danger mt-0"  onclick="return window.location.href='roles/create'">Add Role
                         </button>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
                            <td>{{ $role->name }}</td>
                            <td>{{ $role->permissions }}</td>
                            <td>        
-                            <button onclick="return window.location.href='/roles/{{$role->id}}'" rel="tooltip" class="btn btn-neutral bg-transparent btn-icon" data-original-title="Edit Property Type" title="Edit Property Type">            <i class="fa fa-edit text-success"></i>        </button> 
+                            <button onclick="return window.location.href='roles/{{$role->id}}'" rel="tooltip" class="btn btn-neutral bg-transparent btn-icon" data-original-title="Edit Property Type" title="Edit Property Type">            <i class="fa fa-edit text-success"></i>        </button> 
                           </td>
                           <td>
                              <form 
