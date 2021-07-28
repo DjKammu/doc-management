@@ -29,7 +29,7 @@
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text">
-                            <i class="nc-icon nc-key-25"></i>
+                            <i class="fa fa-key"></i>
                         </span>
                     </div>
                     <input id="password" type="password"  class="form-control menz-input psInput display-none @error('password') is-invalid @enderror" placeholder="Passwort" name="password" required>

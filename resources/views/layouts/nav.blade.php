@@ -6,7 +6,7 @@
             <div class="navbar-minimize">
                 <button id="minimizeSidebar" class="btn btn-icon btn-round">
                     <i class="nc-icon nc-minimal-right text-center visible-on-sidebar-mini"></i>
-                    <i class="nc-icon nc-minimal-left text-center visible-on-sidebar-regular"></i>
+                    <i class="fa fa-chevron-right"></i>
                 </button>
             </div>
             <div class="navbar-toggle">

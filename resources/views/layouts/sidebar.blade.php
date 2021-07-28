@@ -65,6 +65,8 @@
                     <p>Dashboard</p>
                 </a>
             </li>
+             
+              @can('view')
 
             <!-- Property Types -->
              <li class="{{ Request::is('property-types*') ? 'active' : '' }}">
@@ -74,6 +76,28 @@
                     <p>Property Types</p>
                 </a>
             </li>
+
+            @endcan
+           
+              @can('add_users')
+             <!-- Property Types -->
+             <li class="{{ Request::is('roles*') ? 'active' : '' }}">
+                <a href="{{ route('roles.index') }}">
+                    <!-- <i class="nc-icon nc-bank"></i> -->
+                    <i class="fa fa-user-circle"></i>
+                    <p>Roles</p>
+                </a>
+            </li>
+       
+             <!-- Property Types -->
+             <li class="{{ Request::is('users*') ? 'active' : '' }}">
+                <a href="{{ route('users.index') }}">
+                    <!-- <i class="nc-icon nc-bank"></i> -->
+                    <i class="fa fa-user"></i>
+                    <p>Users</p>
+                </a>
+            </li>
+            @endcan
 
         </ul>
     </div>

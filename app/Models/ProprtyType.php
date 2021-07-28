@@ -12,6 +12,6 @@ class ProprtyType extends Model
     protected $perPage = 20;
 
     protected $fillable = [
-     'name' , 'slug'
+     'name' , 'slug' ,'account_number'
     ];
 }

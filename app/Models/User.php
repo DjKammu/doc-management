@@ -11,16 +11,6 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    // CONST DEFAULT_FIRST_LOGIN = 1;
-
-    // CONST LOGIN_ATTEMPT = 3;
-
-    // CONST LOGIN_BLOCK_HOURS = 8;
-
-    // CONST BLOCKED_MSG  = 'You are account has been bloked. Please try after '.self::LOGIN_BLOCK_HOURS. ' Hours';
-
-    // protected $table = 'Login';
-
     /**
      * The attributes that are mass assignable.
      *
@@ -52,8 +42,37 @@ class User extends Authenticatable
     ];
 
 
-    // public function beleges(){
+       public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'role_users')->withTimestamps();
+    }
+   
+    /**
+     * Checks if User is Admin.
+     */
      
-    //    return $this->hasMany(Belege::class,'Kundennummer','Kundennummer');
-    // }
+     public function isAdmin(){
+        return (auth()->user()->id == 1) ?? false;
+     }
+
+     /**
+     * Checks if User has access to $permissions.
+     */
+    public function hasAccess(string $permissions) : bool
+    {
+        // check if the permission is available in any role
+        foreach ($this->roles as $role) {
+            if($role->hasAccess($permissions)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    /**
+     * Checks if the user belongs to role.
+     */
+    public function inRole(string $roleSlug)
+    {
+        return $this->roles()->where('slug', $roleSlug)->count() == 1;
+    }
 }

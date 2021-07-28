@@ -48,7 +48,17 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                    
+                                     <!-- Current Password -->
+                                    <div class="row">
+                                        <div class="col-lg-5 col-md-6 mx-auto">
+                                            <div class="form-group">
+                                                <label class="text-dark" for="password">Account Number 
+                                                </label>
+                                                <input  name="account_number" type="text" class="form-control" value="{{ $type->account_number }}" placeholder="Account Number" required="">
+                                            </div>
+                                        </div>
+                                    </div>
 
                                     <!-- Submit Button -->
                                     <div class="col-12 text-center">

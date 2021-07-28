@@ -43,7 +43,18 @@
                                             <div class="form-group">
                                                 <label class="text-dark" for="password">Name 
                                                 </label>
-                                                <input  name="name" type="text" class="form-control" placeholder="Proprty Name" required="">
+                                                <input  name="name" value="{{ old('name')}}" type="text" class="form-control" placeholder="Proprty Name" required="">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Current Password -->
+                                    <div class="row">
+                                        <div class="col-lg-5 col-md-6 mx-auto">
+                                            <div class="form-group">
+                                                <label class="text-dark" for="password">Account Number 
+                                                </label>
+                                                <input  name="account_number"  value="{{ old('account_number')}}" type="text" class="form-control" placeholder="Account Number" required="">
                                             </div>
                                         </div>
                                     </div>
