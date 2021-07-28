@@ -40,7 +40,7 @@
                         <tr class="text-danger">
                             <th>ID</th>
                             <th>Name</th>
-                            <th>Permission</th>
+                            <th>Role</th>
                             <th>Edit</th>
                             <th>Delete</th>
                         </tr>
@@ -50,7 +50,7 @@
                          <tr>
                            <td> {{ $role->id }}</td>
                            <td>{{ $role->name }}</td>
-                           <td>{{ $role->permissions }}</td>
+                           <td>{{ @$role->roles->first()->name }}</td>
                            <td>        
                             <button onclick="return window.location.href='users/{{$role->id}}'" rel="tooltip" class="btn btn-neutral bg-transparent btn-icon" data-original-title="Edit Property Type" title="Edit Property Type">            <i class="fa fa-edit text-success"></i>        </button> 
                           </td>
