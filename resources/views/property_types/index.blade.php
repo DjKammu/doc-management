@@ -38,7 +38,7 @@
                     <table id="project-types-table" class="table table-hover text-center">
                         <thead>
                         <tr class="text-danger">
-                            <th>ID</th>
+                            <th>Acc. No.</th>
                             <th>Property Type</th>
                             <!-- <th>Projects</th> -->
                             <th>Edit</th>
@@ -48,7 +48,7 @@
                         <tbody>
                           @foreach($propertyTypes as $type)
                          <tr>
-                           <td> {{ $type->id }}</td>
+                           <td> {{ $type->account_number }}</td>
                            <td>{{ $type->name }}</td>
                            <td>        
                             <button onclick="return window.location.href='/property-types/{{$type->id}}'" rel="tooltip" class="btn btn-neutral bg-transparent btn-icon" data-original-title="Edit Property Type" title="Edit Property Type">            <i class="fa fa-edit text-success"></i>        </button> 
