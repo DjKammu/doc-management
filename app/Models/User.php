@@ -11,6 +11,8 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    protected $perPage = 20;
+
     /**
      * The attributes that are mass assignable.
      *

@@ -23,7 +23,7 @@
 
     <!--   Core JS Files   -->
     <script src="{{ asset('js/core/jquery.min.js') }}"></script>
-    <script src="{{ asset('js/core/popper.min.js') }}"></script>
+    <!-- <script src="{{ asset('js/core/popper.min.js') }}"></script> -->
     <script src="{{ asset('js/core/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/plugins/perfect-scrollbar.jquery.min.js') }}"></script>
     <script src="{{ asset('js/plugins/moment.min.js') }}"></script>

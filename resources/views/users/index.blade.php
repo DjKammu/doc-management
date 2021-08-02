@@ -73,6 +73,9 @@
                         </tbody>
                     </table>
                 </div>
+
+                 {!! $users->render() !!}
+
             </div>
         </div>
     </div>

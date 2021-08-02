@@ -55,6 +55,8 @@ Route::post('/password', [App\Http\Controllers\HomeController::class, 'updatePas
 
 Route::resource('property-types', App\Http\Controllers\ProprtyTypeController::class);
 
+Route::resource('properties', App\Http\Controllers\PropertyController::class);
+
 Route::resource('roles', App\Http\Controllers\RoleController::class)->middleware('can:add_users');
 
 Route::resource('users', App\Http\Controllers\UserController::class)->middleware('can:add_users');

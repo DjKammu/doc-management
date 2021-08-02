@@ -69,6 +69,19 @@
               @can('view')
 
             <!-- Property Types -->
+             <li class="{{ Request::is('properties*') ? 'active' : '' }}">
+                <a href="{{ route('properties.index') }}">
+                    <!-- <i class="nc-icon nc-bank"></i> -->
+                    <i class="fa fa-building-o"></i>
+                    <p>Properties</p>
+                </a>
+            </li>
+
+            @endcan
+
+            @can('view')
+
+            <!-- Property Types -->
              <li class="{{ Request::is('property-types*') ? 'active' : '' }}">
                 <a href="{{ route('property-types.index') }}">
                     <!-- <i class="nc-icon nc-bank"></i> -->

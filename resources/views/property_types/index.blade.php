@@ -29,7 +29,7 @@
                         <h4 class="mt-0 text-left">Property Types List</h4>
                     </div>
                     <div class="col-6 text-right">
-                        <button type="button" class="btn btn-danger mt-0"  onclick="return window.location.href='/property-types/create'">Add Property Type
+                        <button type="button" class="btn btn-danger mt-0"  onclick="return window.location.href='property-types/create'">Add Property Type
                         </button>
                     </div>
                 </div>
@@ -51,7 +51,7 @@
                            <td> {{ $type->account_number }}</td>
                            <td>{{ $type->name }}</td>
                            <td>        
-                            <button onclick="return window.location.href='/property-types/{{$type->id}}'" rel="tooltip" class="btn btn-neutral bg-transparent btn-icon" data-original-title="Edit Property Type" title="Edit Property Type">            <i class="fa fa-edit text-success"></i>        </button> 
+                            <button onclick="return window.location.href='property-types/{{$type->id}}'" rel="tooltip" class="btn btn-neutral bg-transparent btn-icon" data-original-title="Edit Property Type" title="Edit Property Type">            <i class="fa fa-edit text-success"></i>        </button> 
                           </td>
                           <td>
                              <form 
@@ -72,6 +72,7 @@
                         </tbody>
                     </table>
                 </div>
+                 {!! $propertyTypes->render() !!}
             </div>
         </div>
     </div>
