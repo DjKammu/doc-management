@@ -66,7 +66,7 @@
                                      <div class="card card-user card-table-item" style="width: 100%; height: 100%;">
                                         <div class="card-body pb-0">
                                            <div class="author mt-1">
-                                              <img class="avatar border-gray" src="{{ ($property->photo) ? \Storage::url($property->photo) : asset('img/image_placeholder.png') }}">                        
+                                              <img class="avatar border-gray" src="{{ ($property->photo) ? url(\Storage::url($property->photo)) : asset('img/image_placeholder.png') }}">                        
                                               <h5 class="title mb-0">{{ $property->property_name }}</h5>
                                            </div>
                                         </div>

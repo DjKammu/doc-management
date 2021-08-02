@@ -85,7 +85,7 @@
                                             <div class="form-group">
                                                 <label class="text-dark" for="password">City 
                                                 </label>
-                                                <input  name="city" value="{{ $property->city }}" type="text" class="form-control" placeholder="Proprty Name">
+                                                <input  name="city" value="{{ $property->city }}" type="text" class="form-control" placeholder="City">
                                             </div>
                                         </div>
                                     </div>

@@ -83,7 +83,7 @@
                                             <div class="form-group">
                                                 <label class="text-dark" for="password">City 
                                                 </label>
-                                                <input  name="city" value="{{ old('property_name')}}" type="text" class="form-control" placeholder="Proprty Name">
+                                                <input  name="city" value="{{ old('property_name')}}" type="text" class="form-control" placeholder="City">
                                             </div>
                                         </div>
                                     </div>
