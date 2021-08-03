@@ -140,5 +140,8 @@ tr a:hover span.cross{
 button.btn.btn-neutral.bg-transparent.btn-icon{
   background-color: transparent !important;
 }
+td{
+  width: 100%;
+}
 </style>
 @endsection
