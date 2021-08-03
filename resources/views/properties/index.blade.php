@@ -40,7 +40,7 @@
                     </div>
                     <div class="col-6 text-right">
                         <select style="height: 26px;" onchange="return window.location.href = '?p='+this.value"> 
-                        <option>Select Project Type</option>
+                        <option>Select Property Type</option>
                         @foreach($propertyTypes as $type)
                            <option value="{{ $type->slug }}" {{ (@request()->p == $type->slug) ? 'selected' : ''}}> {{ $type->name }}</option>
                         @endforeach
@@ -62,7 +62,20 @@
                           @foreach($properties as $property)
                             <tr class="text-center col-lg-4 col-sm-6 odd" style="display: flex; flex-wrap: wrap;" role="row">
                                <td>
-                                  <a style="text-decoration: none;" href="properties/{{ $property->id }}">
+                                  <a style="text-decoration: none; position: relative;" href="properties/{{ $property->id }}">
+                                    <span class="cross"> 
+                                     <form 
+                                        method="post" 
+                                        action="{{route('properties.destroy',$property->id)}}"> 
+                                         @csrf
+                                        {{ method_field('DELETE') }}
+
+                                        <button 
+                                          type="submit"
+                                          onclick="return confirm('Are you sure?')"
+                                          class="btn btn-neutral bg-transparent btn-icon" data-original-title="Delete Property Type" title="Delete Property Type"><i class="fa fa-trash text-danger"></i> </button>
+                                      </form>
+                                    </span>
                                      <div class="card card-user card-table-item" style="width: 100%; height: 100%;">
                                         <div class="card-body pb-0">
                                            <div class="author mt-1">
@@ -112,6 +125,20 @@
 
   });
 
-
 </script>
+<style type="text/css">
+  
+span.cross{
+    position: absolute;
+    z-index: 10;
+    left: 30px;
+    display: none;
+}
+tr a:hover span.cross{
+  display: block;
+}
+button.btn.btn-neutral.bg-transparent.btn-icon{
+  background-color: transparent !important;
+}
+</style>
 @endsection

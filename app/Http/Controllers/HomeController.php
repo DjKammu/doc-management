@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Role;
+use App\Models\ProprtyType;
+use App\Models\Property;
 use Auth;
 
 class HomeController extends Controller
@@ -28,8 +31,12 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $propertyTypes = ProprtyType::count();
+        $properties = Property::count();
+        $users = User::count();
+        $roles = Role::count();
 
-        return view('home');
+        return view('home',compact('propertyTypes','properties','users','roles'));
     }
 
     /**
@@ -53,6 +60,15 @@ class HomeController extends Controller
         $request->validate([
               'email' => 'required|email|unique:users,email,'.$user->id,
         ]);
+        
+         if($request->hasFile('profile_picture')){
+               $profile_picture = $request->file('profile_picture');
+               $photoName = $user->name.'-'.time() . '.' . $profile_picture->getClientOriginalExtension();
+              
+               $avatar  = $request->file('profile_picture')->storeAs('users', $photoName, 'public');
+
+               $user->avatar = $avatar;
+        }
 
         $user->email = $data['email'];
         $user->name = $data['name'];

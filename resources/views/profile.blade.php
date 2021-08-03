@@ -100,18 +100,24 @@
                     <!-- Profile -->
                     <div class="tab-pane active" id="profile" role="tabpanel" aria-expanded="true">
                         <div class="row">
+                            <form id="personal_details_form"  method="post" 
+                    action="{{ url('profile') }}" enctype="multipart/form-data">
+                        @csrf
     <div class="col-md-12">
         <div class="card-body">
 
             <div class="row">
 
+                
+
                 <!-- Mini Profile Section -->
                 <div class="col-lg-4 text-center">
                     <div class="fileinput fileinput-new text-center" data-provides="fileinput">
-                        <img id="picture" class=" border-gray" src="{{ asset('images/profile-pictures/default.jpg') }}"
+                        <img style="width: 200px;" id="picture" class=" border-gray" src="{{ ($user->avatar) ? url(\Storage::url($user->avatar)) : asset('images/profile-pictures/default.jpg') }}"
                              alt="Profile Picture">
                         <div>
-                            <input id="profile-picture-uploader" type="file" name="profile_picture" hidden/>
+                        </br>
+                            <input type="file" name="profile_picture" />
                             <!-- <button class="btn btn-round btn-dark btn-file btn-sm mt-0"
                                     onclick="document.getElementById('profile-picture-uploader').click()">Change Photo
                             </button> -->
@@ -121,9 +127,7 @@
 
                 <!-- Form Section -->
                 <div class="col-lg-8">
-                    <form id="personal_details_form"  method="post" 
-                    action="{{ url('profile') }}">
-                        @csrf
+                    
                         <div class="row text-left">
 
                             <!-- first name -->
@@ -178,11 +182,14 @@
                                 </button>
                             </div>
                         </div>
-                    </form>
+                  
                 </div>
+
             </div>
+             
         </div>
     </div>
+     </form>
 </div>
 
 

@@ -20,8 +20,8 @@
                     </div>
                     <div class="col-7 col-md-8">
                         <div class="numbers">
-                            <p class="card-category">Categories</p>
-                            <p id="categories_count" class="card-title">0<p>
+                            <p class="card-category">Property Types</p>
+                            <p id="categories_count" class="card-title">{{ @$propertyTypes }}<p>
                         </div>
                     </div>
                 </div>
@@ -29,7 +29,7 @@
             <div class="card-footer ">
                 <hr>
                 <div class="stats">
-                    <a href="/categories" class="text-muted"><i class="fa fa-eye"></i> View All</a>
+                    <a href="{{ route('property-types.index')}}" class="text-muted"><i class="fa fa-eye"></i> View All</a>
                 </div>
             </div>
         </div>
@@ -42,13 +42,13 @@
                 <div class="row">
                     <div class="col-5 col-md-4">
                         <div class="icon-big text-center icon-warning">
-                            <i class="fa fa-wrench text-success"></i>
+                            <i class="fa fa-building-o text-success"></i>
                         </div>
                     </div>
                     <div class="col-7 col-md-8">
                         <div class="numbers">
-                            <p class="card-category">Trades</p>
-                            <p id="trades_count" class="card-title">0<p>
+                            <p class="card-category">Properties</p>
+                            <p id="trades_count" class="card-title">{{ @$properties }}<p>
                         </div>
                     </div>
                 </div>
@@ -56,7 +56,7 @@
             <div class="card-footer ">
                 <hr>
                 <div class="stats">
-                    <a href="/trades" class="text-muted"><i class="fa fa-eye"></i> View All</a>
+                    <a href="{{ route('properties.index')}}" class="text-muted"><i class="fa fa-eye"></i> View All</a>
                 </div>
             </div>
         </div>
@@ -69,13 +69,13 @@
                 <div class="row">
                     <div class="col-5 col-md-4">
                         <div class="icon-big text-center icon-warning">
-                            <i class="fa fa-users text-danger"></i>
+                            <i class="fa fa-user-circle text-danger"></i>
                         </div>
                     </div>
                     <div class="col-7 col-md-8">
                         <div class="numbers">
-                            <p class="card-category">Subcontractors</p>
-                            <p id="subcontractors_count" class="card-title">0<p>
+                            <p class="card-category">Roles</p>
+                            <p id="subcontractors_count" class="card-title">{{@$roles}}<p>
                         </div>
                     </div>
                 </div>
@@ -83,14 +83,14 @@
             <div class="card-footer ">
                 <hr>
                 <div class="stats">
-                    <a href="/subcontractors" class="text-muted"><i class="fa fa-eye"></i> View All</a>
+                    <a href="{{ route('roles.index') }}" class="text-muted"><i class="fa fa-eye"></i> View All</a>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Files Overview -->
-    <div class="col-lg-4 col-md-6 col-sm-6">
+    <!-- <div class="col-lg-4 col-md-6 col-sm-6">
         <div class="card card-stats">
             <div class="card-body ">
                 <div class="row">
@@ -114,10 +114,10 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- Files Overview -->
-    <div class="col-lg-4 col-md-6 col-sm-6">
+   <!--  <div class="col-lg-4 col-md-6 col-sm-6">
         <div class="card card-stats">
             <div class="card-body ">
                 <div class="row">
@@ -141,7 +141,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- Users Overview -->
     <div class="col-lg-4 col-md-6 col-sm-6">
@@ -150,13 +150,13 @@
                 <div class="row">
                     <div class="col-5 col-md-4">
                         <div class="icon-big text-center icon-warning">
-                            <i class="fa fa-address-card text-success"></i>
+                            <i class="fa fa-user text-success"></i>
                         </div>
                     </div>
                     <div class="col-7 col-md-8">
                         <div class="numbers">
                             <p class="card-category">Users</p>
-                            <p id="users_count" class="card-title">0<p>
+                            <p id="users_count" class="card-title">{{@$users}}<p>
                         </div>
                     </div>
                 </div>
@@ -164,7 +164,7 @@
             <div class="card-footer ">
                 <hr>
                 <div class="stats">
-                    <a href="/users" class="text-muted"><i class="fa fa-eye"></i> View All</a>
+                    <a href="{{ route('users.index')}}" class="text-muted"><i class="fa fa-eye"></i> View All</a>
                 </div>
             </div>
         </div>

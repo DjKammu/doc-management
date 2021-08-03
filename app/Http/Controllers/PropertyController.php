@@ -201,7 +201,6 @@ class PropertyController extends Controller
              { 
                $path = public_path().'/files/';
                $propertyDir  = ($slug  != $oldSlug) ? $slug : $oldSlug;
-               print($path.$oldProprty_type->slug.'/'.$propertyDir);
              // dd($path.$proprty_type->slug.'/'.$propertyDir);
                 \File::copyDirectory($path.$oldProprty_type->slug.'/'.$propertyDir,
                  $path.$proprty_type->slug.'/'.$propertyDir); 
@@ -227,7 +226,17 @@ class PropertyController extends Controller
                return abort('401');
           } 
 
-         Property::find($id)->delete();
+         $property = Property::find($id);
+         $proprty_slug = \Str::slug($property->property_name);
+         $proprty_type = @ProprtyType::find($property->proprty_type_id);
+
+         $proprty_type_slug = @$proprty_type->slug;
+
+         $path = @public_path().'/files/'.$proprty_type_slug.'/'.$proprty_slug;
+
+         @\File::deleteDirectory($path);
+
+         $property->delete();
 
         return redirect()->back()->with('message', 'Proprty Delete Successfully!');
     }
