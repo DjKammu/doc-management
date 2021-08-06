@@ -30,7 +30,10 @@ class ProprtyTypeController extends Controller
                return abort('401');
          } 
 
-         $propertyTypes = ProprtyType::paginate((new ProprtyType())->perPage); 
+         $propertyTypes = ProprtyType::orderBy('account_number');
+
+         $propertyTypes = $propertyTypes->paginate((new ProprtyType())->perPage); 
+         
          return view('property_types.index',compact('propertyTypes'));
     }
 

@@ -1,6 +1,6 @@
 @extends('layouts.admin-app')
 
-@section('title', 'Property Type')
+@section('title', 'Edit Property')
 
 @section('content')
       <!-- Start Main View -->
@@ -26,7 +26,7 @@
             <div class="card-body">
               <div class="row mb-2">
                     <div class="col-6">
-                        <h4 class="mt-0 text-left">Edit Property Type</h4>
+                        <h4 class="mt-0 text-left">Edit Property</h4>
                     </div>
                 </div>
 
