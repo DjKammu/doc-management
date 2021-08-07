@@ -1,6 +1,6 @@
 @extends('layouts.admin-app')
 
-@section('title', 'Proprties')
+@section('title', 'Properties')
 
 @section('content')
       <!-- Start Main View -->

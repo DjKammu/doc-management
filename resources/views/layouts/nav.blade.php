@@ -32,7 +32,7 @@
                     <a class="nav-link btn-rotate" href="/profile">
                         <i class="fa fa-user"></i>
                         <p>
-                            <span class="">{{ auth()->user()->name }}</span>
+                            <span class="">{{ (auth()->check())  ? auth()->user()->name : 'Guest' }}</span>
                         </p>
                     </a>
                 </li>

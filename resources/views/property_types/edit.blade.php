@@ -44,7 +44,7 @@
                                             <div class="form-group">
                                                 <label class="text-dark" for="password">Name 
                                                 </label>
-                                                <input  name="name" value="{{ $type->name }}" type="text" class="form-control" placeholder="Proprty Name" required="">
+                                                <input  name="name" value="{{ $type->name }}" type="text" class="form-control" placeholder="Property Name" required="">
                                             </div>
                                         </div>
                                     </div>
