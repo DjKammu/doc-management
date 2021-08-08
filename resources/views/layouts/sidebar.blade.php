@@ -90,6 +90,20 @@
                 </a>
             </li>
 
+            @endcan 
+
+
+            @can('view')
+
+            <!-- Property Types -->
+             <li class="{{ Request::is('document-types*') ? 'active' : '' }}">
+                <a href="{{ route('document-types.index') }}">
+                    <!-- <i class="nc-icon nc-bank"></i> -->
+                    <i class="fa fa-file"></i>
+                    <p>Document Types</p>
+                </a>
+            </li>
+
             @endcan
            
               @can('add_users')

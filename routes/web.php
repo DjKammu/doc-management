@@ -61,4 +61,5 @@ Route::resource('roles', App\Http\Controllers\RoleController::class)->middleware
 
 Route::resource('users', App\Http\Controllers\UserController::class)->middleware('can:add_users');
 
+Route::resource('document-types', App\Http\Controllers\DocumentTypeController::class);
 
