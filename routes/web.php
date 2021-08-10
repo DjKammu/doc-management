@@ -63,3 +63,9 @@ Route::resource('users', App\Http\Controllers\UserController::class)->middleware
 
 Route::resource('document-types', App\Http\Controllers\DocumentTypeController::class);
 
+Route::get('properties/{id}/documents',[App\Http\Controllers\DocumentController::class,'create'])
+->name('properties.documents');
+
+Route::post('properties/{id}/documents',[App\Http\Controllers\DocumentController::class,'store'])
+->name('properties.documents');
+

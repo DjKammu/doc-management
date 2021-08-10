@@ -33,126 +33,33 @@
                <div class="row">
                         <div class="col-md-12">
                             <div class="card-body">
-                                <form   method="post" 
-                              action="{{ route('properties.update',$property->id) }}" enctype="multipart/form-data">
-                              <input type="hidden" name="_method" value="PUT">
-                                  @csrf
 
-                                    <!-- Current Password -->
-                                    <div class="row">
-                                        <div class="col-lg-5 col-md-6 mx-auto">
-                                            <div class="form-group">
-                                                <label class="text-dark" for="password">Name 
-                                                </label>
-                                                <input  name="property_name" value="{{ $property->property_name }}" type="text" class="form-control" placeholder="Proprty Name" required="">
-                                            </div>
-                                        </div>
+                              <div class="nav-tabs-navigation">
+                                    <div class="nav-tabs-wrapper">
+                                        <ul id="tabs" class="nav nav-tabs" role="tablist">
+
+                                            <li class="nav-item">
+                                                <a class="nav-link text-dark active" data-toggle="tab" href="#details" role="tab"
+                                                   aria-expanded="true">Details</a>
+                                            </li>
+
+                                            <li class="nav-item">
+                                                <a class="nav-link text-dark" data-toggle="tab" href="#documents" role="tab"
+                                                   aria-expanded="false">Documents</a>
+                                            </li>
+
+                                        </ul>
                                     </div>
-                                    
-                                     <!-- Current Password -->
-                                    <div class="row">
-                                        <div class="col-lg-5 col-md-6 mx-auto">
-                                            <div class="form-group">
-                                                <label class="text-dark" for="password">Property Type
-                                                </label>
-                                                <select class="form-control" name="proprty_type_id"> 
-                                                  <option> Select Property Type</option>
-                                                  @foreach($propertyTypes as $type)
-                                                   <option value="{{ $type->id }}" {{ 
-                                                    ($property->proprty_type_id == $type->id) ? 'selected=""' : ''}}>{{ $type->name}}
-                                                   </option>
-                                                  @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div> 
+                               </div>
 
-                                    <!-- Current Password -->
-                                    <div class="row">
-                                        <div class="col-lg-5 col-md-6 mx-auto">
-                                            <div class="form-group">
-                                                <label class="text-dark" for="password">Address
-                                                </label>
-                                                <textarea  name="property_address"  type="text" class="form-control" placeholder="Property Address" >
-                                                 {{ $property->property_address }}</textarea>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div id="my-tab-content" class="tab-content">
 
-                                    <!-- Current Password -->
-                                    <div class="row">
-                                        <div class="col-lg-5 col-md-6 mx-auto">
-                                            <div class="form-group">
-                                                <label class="text-dark" for="password">City 
-                                                </label>
-                                                <input  name="city" value="{{ $property->city }}" type="text" class="form-control" placeholder="City">
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @include('properties.includes.details')
+                                    @include('properties.includes.documents')
+                             
+                              </div>
 
-                                    <!-- Current Password -->
-                                    <div class="row">
-                                        <div class="col-lg-5 col-md-6 mx-auto">
-                                            <div class="form-group">
-                                                <label class="text-dark" for="password">State
-                                                </label>
-                                                <input  name="state"  value="{{ $property->state }}" type="text" class="form-control" placeholder="State" >
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Current Password -->
-                                    <div class="row">
-                                        <div class="col-lg-5 col-md-6 mx-auto">
-                                            <div class="form-group">
-                                                <label class="text-dark" for="password">Country 
-                                                </label>
-                                                <input  name="country" value="{{ $property->country }}" type="text" class="form-control" placeholder="Country">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Current Password -->
-                                    <div class="row">
-                                        <div class="col-lg-5 col-md-6 mx-auto">
-                                            <div class="form-group">
-                                                <label class="text-dark" for="password">Zip Code 
-                                                </label>
-                                                <input  name="zip_code"  value="{{ $property->zip_code }}" type="text" class="form-control" placeholder="Zip Code" >
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Current Password -->
-                                    <div class="row">
-                                        <div class="col-lg-5 col-md-6 mx-auto">
-                                            <div class="form-group">
-                                                <label class="text-dark" for="password">Notes 
-                                                </label>
-                                                <textarea  name="notes"  type="text" class="form-control" placeholder="Notes" >
-                                                 {{ $property->notes }}</textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Current Password -->
-                                    <div class="row">
-                                        <div class="col-lg-5 col-md-6 mx-auto">
-                                            <div class="form-group">
-                                                <label class="text-dark" for="password">Photo 
-                                                </label>
-                                                <input  name="photo"  type="file">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Submit Button -->
-                                    <div class="col-12 text-center">
-                                        <button id="change-password-button" type="submit" class="btn btn-danger">Update Property Type
-                                        </button>
-                                    </div>
-
-                                </form>
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -163,15 +70,44 @@
 
 @endsection
 
+
 @section('pagescript')
 
 <script type="text/javascript">
-  function deletePropertyType(id){
 
-    if(confirm('Are you sure to delete?')){
-      window.location.href = '{{ route("property-types.destroy",1)}}';
+  $(document).ready(function(){
+
+  $('#search').click(function(){
+        var search = $('#inputSearch').val();
+        window.location.href = '?s='+search;
+  });
+
+  $(document).keyup(function(event) {
+    if (event.keyCode === 13) {
+        $("#search").click();
     }
-  }
-</script>
+});
 
+
+  });
+
+</script>
+<style type="text/css">
+  
+span.cross{
+    position: absolute;
+    z-index: 10;
+    left: 30px;
+    display: none;
+}
+tr a:hover span.cross{
+  display: block;
+}
+button.btn.btn-neutral.bg-transparent.btn-icon{
+  background-color: transparent !important;
+}
+td{
+  width: 100%;
+}
+</style>
 @endsection

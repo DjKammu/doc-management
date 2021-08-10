@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use App\Models\DocumentType;
 use App\Models\ProprtyType;
@@ -9,7 +10,7 @@ use App\Models\Property;
 use Gate;
 
 
-class PropertyController extends Controller
+class DocumentController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -70,9 +71,11 @@ class PropertyController extends Controller
                return abort('401');
          } 
 
-        $propertyTypes = ProprtyType::all(); 
+         $id = request()->id;
 
-        return view('properties.create',compact('propertyTypes'));
+        $documentsTypes = DocumentType::all(); 
+
+        return view('properties.documents-create',compact('documentsTypes'));
     }
 
     /**
@@ -81,7 +84,7 @@ class PropertyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
           if(Gate::denies('add')) {
                return abort('401');
@@ -90,33 +93,60 @@ class PropertyController extends Controller
         $data = $request->except('_token');
 
         $request->validate([
-              'property_name' => 'required|unique:properties',
-              'proprty_type_id' => 'required|exists:proprty_types,id'
+              'name' => [
+                    'required',
+                     Rule::unique('documents')->where(function ($query) use($id) {
+                        return $query->where('property_id', $id);
+                    }),
+                ],
+                'account_number' =>  [
+                    'required',
+                     Rule::unique('documents')->where(function ($query) use($id) {
+                        return $query->where('property_id', $id);
+                    }),
+                ],
+              'document_type_id' => 'required|exists:document_types,id',
+               'file' => 'nullable|sometimes|mimes:pdf|max:10000'
         ]);
 
-        $slug = \Str::slug($request->property_name);
+        $slug = \Str::slug($request->name);
 
-        $data['photo'] = '';    
+        $data['file'] = '';    
+       
+         $property = Property::with('proprty_type')->find($id);
 
-        if($request->hasFile('photo')){
-               $photo = $request->file('photo');
-               $photoName = $slug.'-'.time() . '.' . $photo->getClientOriginalExtension();
-              
-               $data['photo']  = $request->file('photo')->storeAs('properties', $photoName, 'public');
+         if(!$property){
+            return redirect()->back();
+        }
+        
+        $document_type = DocumentType::find($request->document_type_id);
+
+        $propperty_slug = \Str::slug($property->property_name);
+
+        $proprty_type = @$property->proprty_type;
+
+        $proprty_type_slug = @$proprty_type->slug; 
+
+        $document_type_slug = $document_type->slug;
+
+        $public_path = public_path().'/';
+
+        $folderPath = 'files/'.$proprty_type_slug.'/'.$propperty_slug.'/'.$document_type_slug;
+
+        \File::makeDirectory($public_path.$folderPath, $mode = 0777, true, true);
+
+        if($request->hasFile('file')){
+               $file = $request->file('file');
+               $fileName = $document_type_slug.'-'.time().'.'. $file->getClientOriginalExtension();
+               $request->file('file')->storeAs($folderPath, $fileName, 'doc_upload');
+               $data['file']  = $fileName;
         }
 
-        $property = Property::create($data);
+        $data['slug'] = $slug;
+        
+        $property->documents()->create($data);
 
-        $proprty_type = ProprtyType::find($data['proprty_type_id']);
-
-        $property->proprty_type()->associate($proprty_type);
-
-        $property->save();
-
-        $path = public_path().'/files/' . $proprty_type->slug.'/'.$slug;
-        \File::makeDirectory($path, $mode = 0777, true, true);
-
-        return redirect('properties')->with('message', 'Proprty Created Successfully!');
+        return redirect(route('properties.show',['property' => $id]))->with('message', 'Document Created Successfully!');
     }
 
     /**
@@ -130,29 +160,11 @@ class PropertyController extends Controller
           if(Gate::denies('edit')) {
                return abort('401');
           } 
-
-         $propertyTypes = ProprtyType::all();
-         $property = Property::find($id);
-         $documentTypes = DocumentType::all();
-         $documents = $property->documents();
-
-         if(request()->filled('s')){
-            $searchTerm = request()->s;
-            $documents->where('name', 'LIKE', "%{$searchTerm}%") 
-            ->orWhere('slug', 'LIKE', "%{$searchTerm}%");
-         }  
-
-          if(request()->filled('p')){
-            $p = request()->p;
-            $documents->whereHas('document_type', function($q) use ($p){
-                $q->where('slug', $p);
-            });
-         } 
-
-         $documents = $documents->paginate((new Property())->perPage);
-
-         return view('properties.edit',compact('propertyTypes','property',
-            'documentTypes','documents'));
+          
+          dd($id);
+         // $propertyTypes = ProprtyType::all();
+         // $property = Property::find($id);
+         // return view('properties.edit',compact('propertyTypes','property'));
     }
 
     /**
@@ -179,10 +191,12 @@ class PropertyController extends Controller
                return abort('401');
         } 
 
+        dd($id);
+
        $data = $request->except('_token');
 
        $request->validate([
-              'property_name' => 'required|unique:properties,property_name,'.$id,
+              'property_name' => 'required',
               'proprty_type_id' => 'required|exists:proprty_types,id'
        ]);
 
@@ -245,6 +259,8 @@ class PropertyController extends Controller
          if(Gate::denies('delete')) {
                return abort('401');
           } 
+         
+         dd($id);
 
          $property = Property::find($id);
          $proprty_slug = \Str::slug($property->property_name);

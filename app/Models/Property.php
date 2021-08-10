@@ -19,4 +19,10 @@ class Property extends Model
     public function proprty_type(){
     	return $this->belongsTo(ProprtyType::class);
     }
+
+    public function documents(){
+
+    	return $this->hasMany(Document::class);
+    }
+    
 }
