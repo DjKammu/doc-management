@@ -99,14 +99,8 @@ class DocumentController extends Controller
                         return $query->where('property_id', $id);
                     }),
                 ],
-                'account_number' =>  [
-                    'required',
-                     Rule::unique('documents')->where(function ($query) use($id) {
-                        return $query->where('property_id', $id);
-                    }),
-                ],
               'document_type_id' => 'required|exists:document_types,id',
-               'file' => 'nullable|sometimes|mimes:pdf|max:10000'
+               'file' => 'nullable|sometimes|mimes:pdf,doc,docx,jpeg,jpg,png,csv,xlsx,xls'
         ]);
 
         $slug = \Str::slug($request->name);

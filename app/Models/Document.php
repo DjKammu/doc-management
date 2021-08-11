@@ -20,4 +20,8 @@ class Document extends Model
 
         return $this->belongsTo(DocumentType::class);
     }
+
+    public function property(){
+    	return $this->belongsTo(Property::class);
+    }
 }

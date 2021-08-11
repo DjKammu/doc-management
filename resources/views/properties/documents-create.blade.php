@@ -49,25 +49,13 @@
                                         </div>
                                     </div>
 
-                                    <!-- Current Password -->
-                                    <div class="row">
-                                        <div class="col-lg-5 col-md-6 mx-auto">
-                                            <div class="form-group">
-                                                <label class="text-dark" for="password">Account Number 
-                                                </label>
-                                                <input  name="account_number"  value="{{ old('account_number')}}" type="text" class="form-control" placeholder="Account Number" required="">
-                                            </div>
-                                        </div>
-                                    </div>
-
-
                                     <div class="row">
                                         <div class="col-lg-5 col-md-6 mx-auto">
                                             <div class="form-group">
                                                 <label class="text-dark" for="password">Document Type
                                                 </label>
                                                 <select class="form-control" name="document_type_id"> 
-                                                  <option> Select Document Type</option>
+                                                  <option value=""> Select Document Type</option>
                                                   @foreach($documentsTypes as $type)
                                                    <option value="{{ $type->id }}" >{{ $type->name}}
                                                    </option>

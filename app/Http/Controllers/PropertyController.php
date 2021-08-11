@@ -151,6 +151,22 @@ class PropertyController extends Controller
 
          $documents = $documents->paginate((new Property())->perPage);
 
+        $documents->filter(function($doc){
+
+            $property = $doc->property()->first(); 
+
+            $property_slug = \Str::slug($property->property_name);
+
+            $document_type = $doc->document_type()->pluck('slug')->first();
+
+            $property_type_slug = @ProprtyType::find($property->proprty_type_id)->slug;
+
+
+            $folderPath = "files/$property_type_slug/$property_slug/$document_type/";
+
+           return $doc->file = asset($folderPath.$doc->file);
+         });
+
          return view('properties.edit',compact('propertyTypes','property',
             'documentTypes','documents'));
     }

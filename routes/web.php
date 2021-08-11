@@ -66,6 +66,8 @@ Route::resource('document-types', App\Http\Controllers\DocumentTypeController::c
 Route::get('properties/{id}/documents',[App\Http\Controllers\DocumentController::class,'create'])
 ->name('properties.documents');
 
+Route::get('properties/{id}/documents/{document}',[App\Http\Controllers\DocumentController::class,'show'])->name('properties.documents.show');
+
 Route::post('properties/{id}/documents',[App\Http\Controllers\DocumentController::class,'store'])
 ->name('properties.documents');
 
