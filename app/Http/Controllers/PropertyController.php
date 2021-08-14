@@ -223,24 +223,24 @@ class PropertyController extends Controller
         
         $oldProprty_type = ProprtyType::find($property->proprty_type_id);
         
-        if(($oldProprty_type->id != $request->proprty_type_id) || 
+        if((@$oldProprty_type->id != $request->proprty_type_id) || 
             ($slug != $oldSlug)){
              
              if($slug  != $oldSlug){
-                 $path = public_path().'/files/'.$oldProprty_type->slug.'/';
+                 $path = public_path().'/files/'.@$oldProprty_type->slug.'/';
                  @rename($path.$oldSlug, $path.$slug); 
              }
 
              $proprty_type = ProprtyType::find($request->proprty_type_id);
 
-             if($oldProprty_type->id != $request->proprty_type_id)
+             if(@$oldProprty_type->id != $request->proprty_type_id)
              { 
                $path = public_path().'/files/';
                $propertyDir  = ($slug  != $oldSlug) ? $slug : $oldSlug;
              // dd($path.$proprty_type->slug.'/'.$propertyDir);
-                \File::copyDirectory($path.$oldProprty_type->slug.'/'.$propertyDir,
+                \File::copyDirectory($path.@$oldProprty_type->slug.'/'.$propertyDir,
                  $path.$proprty_type->slug.'/'.$propertyDir); 
-               \File::deleteDirectory($path.$oldProprty_type->slug.'/'.$propertyDir);
+               \File::deleteDirectory($path.@$oldProprty_type->slug.'/'.$propertyDir);
              }
         }
 
