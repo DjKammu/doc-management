@@ -70,7 +70,7 @@
                                             <div class="form-group">
                                                 <label class="text-dark" for="password">File 
                                                 </label>
-                                                <input  name="file"  type="file">
+                                                <input  name="file[]"  type="file" multiple="">
                                             </div>
                                         </div>
                                     </div>

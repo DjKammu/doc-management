@@ -6,14 +6,12 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\ProprtyType;
+use App\Models\DocumentType;
 use App\Models\Property;
 use Auth;
 
 class HomeController extends Controller
 {
-    CONST INVOICE = 'Rechnung';
-
-    CONST DOC_TYPE = 'Auftrag';
     /**
      * Create a new controller instance.
      *
@@ -35,8 +33,10 @@ class HomeController extends Controller
         $properties = Property::count();
         $users = User::count();
         $roles = Role::count();
+        $documentTypes = DocumentType::count();
 
-        return view('home',compact('propertyTypes','properties','users','roles'));
+        return view('home',compact('propertyTypes','documentTypes','properties',
+            'users','roles'));
     }
 
     /**

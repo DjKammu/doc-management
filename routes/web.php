@@ -63,6 +63,8 @@ Route::resource('users', App\Http\Controllers\UserController::class)->middleware
 
 Route::resource('document-types', App\Http\Controllers\DocumentTypeController::class);
 
+Route::resource('documents', App\Http\Controllers\DocumentController::class);
+
 Route::get('properties/{id}/documents',[App\Http\Controllers\DocumentController::class,'create'])
 ->name('properties.documents');
 
@@ -71,3 +73,13 @@ Route::get('properties/{id}/documents/{document}',[App\Http\Controllers\Document
 Route::post('properties/{id}/documents',[App\Http\Controllers\DocumentController::class,'store'])
 ->name('properties.documents');
 
+Route::delete('documents/{id}/file', [App\Http\Controllers\DocumentController::class,'destroyFile'])->name('documents.file.destroy');
+
+
+Route::get('files/{directory?}',[App\Http\Controllers\FileController::class,'index'])->name('files.index');
+
+Route::get('files/{directory}/{property_type}',[App\Http\Controllers\FileController::class,'propertyType'])->name('files.property-type');
+
+Route::get('files/{directory}/{property_type}/{property}',[App\Http\Controllers\FileController::class,'property'])->name('files.property');
+
+Route::get('files/{directory}/{property_type}/{property}/{doc_type}',[App\Http\Controllers\FileController::class,'docType'])->name('files.doc_type');

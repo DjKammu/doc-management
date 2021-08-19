@@ -21,7 +21,6 @@ class Property extends Model
     }
 
     public function documents(){
-
     	return $this->hasMany(Document::class);
     }
     

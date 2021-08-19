@@ -32,7 +32,7 @@
                             <i class="fa fa-key"></i>
                         </span>
                     </div>
-                    <input id="password" type="password"  class="form-control menz-input psInput display-none @error('password') is-invalid @enderror" placeholder="Passwort" name="password" required>
+                    <input id="password" type="password"  class="form-control menz-input psInput display-none @error('password') is-invalid @enderror" placeholder="Password" name="password" required>
                     @error('password')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

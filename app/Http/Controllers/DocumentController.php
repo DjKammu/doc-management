@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use App\Models\DocumentType;
+use App\Models\DocumentFile;
 use App\Models\ProprtyType;
 use App\Models\Property;
+use App\Models\Document;
 use Gate;
 
 
@@ -100,7 +102,7 @@ class DocumentController extends Controller
                     }),
                 ],
               'document_type_id' => 'required|exists:document_types,id',
-               'file' => 'nullable|sometimes|mimes:pdf,doc,docx,jpeg,jpg,png,csv,xlsx,xls'
+              // 'file' => 'nullable|sometimes|mimes:pdf,doc,docx,jpeg,jpg,png,csv,xlsx,xls'
         ]);
 
         $slug = \Str::slug($request->name);
@@ -125,20 +127,24 @@ class DocumentController extends Controller
 
         $public_path = public_path().'/';
 
-        $folderPath = 'files/'.$proprty_type_slug.'/'.$propperty_slug.'/'.$document_type_slug;
+        $folderPath = 'property/'.$proprty_type_slug.'/'.$propperty_slug.'/'.$document_type_slug;
 
         \File::makeDirectory($public_path.$folderPath, $mode = 0777, true, true);
 
-        if($request->hasFile('file')){
-               $file = $request->file('file');
-               $fileName = $document_type_slug.'-'.time().'.'. $file->getClientOriginalExtension();
-               $request->file('file')->storeAs($folderPath, $fileName, 'doc_upload');
-               $data['file']  = $fileName;
-        }
-
         $data['slug'] = $slug;
         
-        $property->documents()->create($data);
+        $document = $property->documents()->create($data);
+
+        if($request->hasFile('file')){
+               $filesArr = [];
+               $files = $request->file('file');
+               foreach ($files as $key => $file) {
+                  $fileName = $document_type_slug.'-'.time().$key.'.'. $file->getClientOriginalExtension();
+                  $file->storeAs($folderPath, $fileName, 'doc_upload');
+                  $filesArr[]  = ['file' => $fileName];
+               }
+                $document->files()->createMany($filesArr);
+        }
 
         return redirect(route('properties.show',['property' => $id]))->with('message', 'Document Created Successfully!');
     }
@@ -149,16 +155,37 @@ class DocumentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id,$doc)
     {
           if(Gate::denies('edit')) {
                return abort('401');
           } 
-          
-          dd($id);
-         // $propertyTypes = ProprtyType::all();
-         // $property = Property::find($id);
-         // return view('properties.edit',compact('propertyTypes','property'));
+
+        $document = Document::with('files')->find($doc);
+
+        $documentsTypes = DocumentType::all(); 
+
+        $property = @$document->property()->first();
+        
+        $property_slug = \Str::slug($property->property_name);
+
+        $document_type = $document->document_type()->pluck('slug')->first();
+
+        $property_type_slug = @ProprtyType::find($property->proprty_type_id)->slug;
+
+        $folderPath = "property/$property_type_slug/$property_slug/$document_type/";
+
+
+       $document->files->filter(function($file) use ($folderPath){
+
+        $file->file = asset($folderPath.$file->file);
+
+         return $file->file;
+       
+     });
+
+      return view('properties.documents-edit',compact('documentsTypes','document'));
+
     }
 
     /**
@@ -185,60 +212,65 @@ class DocumentController extends Controller
                return abort('401');
         } 
 
-        dd($id);
-
        $data = $request->except('_token');
 
        $request->validate([
-              'property_name' => 'required',
-              'proprty_type_id' => 'required|exists:proprty_types,id'
+               'name' => 'required',
+              'document_type_id' => 'required|exists:document_types,id'
        ]);
 
-        $slug = \Str::slug($request->property_name);
-         
-        $property = Property::find($id);
-        $oldSlug = \Str::slug($property->property_name);
+        $slug = \Str::slug($request->name);
 
-        if(!$property){
+        $data['file'] = '';    
+       
+        $document = Document::with('document_type')->find($id);
+
+         if(!$document){
             return redirect()->back();
         }
-
-        $data['photo'] = $property->photo;    
-
-
-        if($request->hasFile('photo')){
-               $photo = $request->file('photo');
-               $photoName = $slug.'-'.time() . '.' . $photo->getClientOriginalExtension();
-              
-               $data['photo']  = $request->file('photo')->storeAs('properties', $photoName, 'public');
-        }
         
-        $oldProprty_type = ProprtyType::find($property->proprty_type_id);
+        $property = $document->property()->with('proprty_type')->first(); 
+
+        $document_type = DocumentType::find($request->document_type_id);
+
+        $propperty_slug = \Str::slug($property->property_name);
+
+        $proprty_type = @$property->proprty_type;
+
+        $proprty_type_slug = @$proprty_type->slug; 
+
+        $document_type_slug = $document_type->slug;
+
+        $old_document_type = $document->document_type()->first();
+
+        $public_path = public_path().'/';
+
+        $folderPath = 'property/'.$proprty_type_slug.'/'.$propperty_slug.'/'.$document_type_slug;
         
-        if(($oldProprty_type->id != $request->proprty_type_id) || 
-            ($slug != $oldSlug)){
+        if(($old_document_type->id != $request->document_type_id)){
              
-             if($slug  != $oldSlug){
-                 $path = public_path().'/files/'.$oldProprty_type->slug.'/';
-                 @rename($path.$oldSlug, $path.$slug); 
-             }
+               $oldFolderPath = 'property/'.$proprty_type_slug.'/'.$propperty_slug.'/'.$old_document_type->slug;   
 
-             $proprty_type = ProprtyType::find($request->proprty_type_id);
-
-             if($oldProprty_type->id != $request->proprty_type_id)
-             { 
-               $path = public_path().'/files/';
-               $propertyDir  = ($slug  != $oldSlug) ? $slug : $oldSlug;
-             // dd($path.$proprty_type->slug.'/'.$propertyDir);
-                \File::copyDirectory($path.$oldProprty_type->slug.'/'.$propertyDir,
-                 $path.$proprty_type->slug.'/'.$propertyDir); 
-               \File::deleteDirectory($path.$oldProprty_type->slug.'/'.$propertyDir);
-             }
+               \File::copyDirectory($public_path.$oldFolderPath,$public_path.$folderPath); 
+               \File::deleteDirectory($public_path.$oldFolderPath);
         }
 
-         $property->update($data);
+        $document->update($data);
 
-        return redirect('properties')->with('message', 'Property Updated Successfully!');
+
+        if($request->hasFile('file')){
+               $filesArr = [];
+               $files = $request->file('file');
+               foreach ($files as $key => $file) {
+                  $fileName = $document_type_slug.'-'.time().$key.'.'. $file->getClientOriginalExtension();
+                  $file->storeAs($folderPath, $fileName, 'doc_upload');
+                  $filesArr[]  = ['file' => $fileName];
+               }
+                $document->files()->createMany($filesArr);
+        }
+
+
+        return redirect("properties/$property->id")->with('message', 'Document Updated Successfully!');
     }
 
 
@@ -253,21 +285,53 @@ class DocumentController extends Controller
          if(Gate::denies('delete')) {
                return abort('401');
           } 
-         
-         dd($id);
 
-         $property = Property::find($id);
-         $proprty_slug = \Str::slug($property->property_name);
-         $proprty_type = @ProprtyType::find($property->proprty_type_id);
+         $document = Document::find($id);
 
-         $proprty_type_slug = @$proprty_type->slug;
+         $property = $document->property()->first(); 
 
-         $path = @public_path().'/files/'.$proprty_type_slug.'/'.$proprty_slug;
+         $property_slug = \Str::slug($property->property_name);
 
-         @\File::deleteDirectory($path);
+         $document_type = $document->document_type()->pluck('slug')->first();
 
-         $property->delete();
+         $property_type_slug = @ProprtyType::find($property->proprty_type_id)->slug;
 
-        return redirect()->back()->with('message', 'Proprty Delete Successfully!');
+
+         $folderPath = "property/$property_type_slug/$property_slug/$document_type/";
+
+         $path = @public_path().'/'.$folderPath;
+
+         $files = $document->files()->get();
+
+
+         foreach (@$files as $key => $file) {
+            @unlink($path.$file->file);
+         }
+
+         $document->delete();
+
+        return redirect()->back()->with('message', 'Document Delete Successfully!');
     }
+
+     public function destroyFile($id)
+    {
+         if(Gate::denies('delete')) {
+               return abort('401');
+          } 
+
+          $path = request()->path;
+
+          $file = DocumentFile::find($id);
+
+          @unlink($path);
+
+          @$file->delete();
+
+         return redirect()->back()->with('message', 'File Delete Successfully!');
+    }
+
+
+
+
+
 }

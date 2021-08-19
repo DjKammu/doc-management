@@ -74,7 +74,7 @@ class ProprtyTypeController extends Controller
             
         ProprtyType::create($data);
 
-        $path = public_path().'/files/' . $data['slug'];
+        $path = public_path().'/property/' . $data['slug'];
         \File::makeDirectory($path, $mode = 0777, true, true);
 
         return redirect('property-types')->with('message', 'Proprty Type Created Successfully!');
@@ -140,7 +140,7 @@ class ProprtyTypeController extends Controller
 
         if($slug != $oldSlug)
          {
-           $path = public_path().'/files/';
+           $path = public_path().'/property/';
            @rename($path.$oldSlug, $path.$slug);
          }
 

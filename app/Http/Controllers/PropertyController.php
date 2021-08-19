@@ -113,10 +113,10 @@ class PropertyController extends Controller
 
         $property->save();
 
-        $path = public_path().'/files/' . $proprty_type->slug.'/'.$slug;
+        $path = public_path().'/property/' . $proprty_type->slug.'/'.$slug;
         \File::makeDirectory($path, $mode = 0777, true, true);
 
-        return redirect('properties')->with('message', 'Proprty Created Successfully!');
+        return redirect('properties')->with('message', 'Property Created Successfully!');
     }
 
     /**
@@ -161,11 +161,18 @@ class PropertyController extends Controller
 
             $property_type_slug = @ProprtyType::find($property->proprty_type_id)->slug;
 
+            $folderPath = "property/$property_type_slug/$property_slug/$document_type/";
+            
+            $files = $doc->files();
 
-            $folderPath = "files/$property_type_slug/$property_slug/$document_type/";
+            $file =  ($files->count() == 1) ? $files->pluck('file')->first() : '';
 
-           return $doc->file = asset($folderPath.$doc->file);
+             $doc->file = ($file  ? asset($folderPath.$file) : '') ;
+
+             return $doc->file;
+           
          });
+
 
          return view('properties.edit',compact('propertyTypes','property',
             'documentTypes','documents'));
@@ -227,7 +234,7 @@ class PropertyController extends Controller
             ($slug != $oldSlug)){
              
              if($slug  != $oldSlug){
-                 $path = public_path().'/files/'.@$oldProprty_type->slug.'/';
+                 $path = public_path().'/property/'.@$oldProprty_type->slug.'/';
                  @rename($path.$oldSlug, $path.$slug); 
              }
 
@@ -235,9 +242,8 @@ class PropertyController extends Controller
 
              if(@$oldProprty_type->id != $request->proprty_type_id)
              { 
-               $path = public_path().'/files/';
+               $path = public_path().'/property/';
                $propertyDir  = ($slug  != $oldSlug) ? $slug : $oldSlug;
-             // dd($path.$proprty_type->slug.'/'.$propertyDir);
                 \File::copyDirectory($path.@$oldProprty_type->slug.'/'.$propertyDir,
                  $path.$proprty_type->slug.'/'.$propertyDir); 
                \File::deleteDirectory($path.@$oldProprty_type->slug.'/'.$propertyDir);
@@ -268,12 +274,12 @@ class PropertyController extends Controller
 
          $proprty_type_slug = @$proprty_type->slug;
 
-         $path = @public_path().'/files/'.$proprty_type_slug.'/'.$proprty_slug;
+         $path = @public_path().'/property/'.$proprty_type_slug.'/'.$proprty_slug;
 
          @\File::deleteDirectory($path);
 
          $property->delete();
 
-        return redirect()->back()->with('message', 'Proprty Delete Successfully!');
+        return redirect()->back()->with('message', 'Property Delete Successfully!');
     }
 }

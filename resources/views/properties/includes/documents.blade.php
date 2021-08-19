@@ -38,15 +38,24 @@
                @foreach($documents as $document)
                 <tr class="text-center col-lg-2 col-sm-3 odd" style="display: flex; flex-wrap: wrap;" role="row">
                    <td>
-                      
-                        <span class="cross"> 
-                        
+                        <span class="cross">
+                          <form 
+                            method="post" 
+                            action="{{route('documents.destroy',$document->id)}}"> 
+                             @csrf
+                            {{ method_field('DELETE') }}
+
+                            <button 
+                              type="submit"
+                              onclick="return confirm('Are you sure?')"
+                              class="btn btn-neutral bg-transparent btn-icon" data-original-title="Delete Property Type" title="Delete Property Type"><i class="fa fa-trash text-danger"></i> </button>
+                          </form> 
                         </span>
                          <div class="card card-table-item" style="width: 100%; height: 100%;">
                             <div class="card-body pb-0">
                                <div class="author mt-1">
                               
-                                 <a  href="{{ $document->file }}" target="_blank">
+                                 <a  href="{{ ($document->file) ? $document->file : route('properties.documents.show', ['id' => request()->property, 'document' => $document->id ]) }}" {{ ($document->file) ? 'target="_blank"' : '' }} >
                                   <img class="avatar border-gray" src="{{ asset('img/pdf.png') }}">  
                                    </a>
                                   <a href="{{ request()->property }}/documents/{{ $document->id }}">                     
@@ -66,3 +75,25 @@
     </div>
     {!! $documents->render() !!}
 </div>
+
+@section('pagescript')
+
+<style type="text/css">
+  
+span.cross{
+    position: absolute;
+    z-index: 10;
+    right: 30px;
+    display: none;
+}
+tr:hover span.cross{
+  display: block;
+}
+button.btn.btn-neutral.bg-transparent.btn-icon{
+  background-color: transparent !important;
+}
+td{
+  width: 100%;
+}
+</style>
+@endsection

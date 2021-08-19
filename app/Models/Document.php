@@ -24,4 +24,8 @@ class Document extends Model
     public function property(){
     	return $this->belongsTo(Property::class);
     }
+
+    public function files(){
+        return $this->hasMany(DocumentFile::class);
+    }
 }
