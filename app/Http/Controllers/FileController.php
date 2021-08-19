@@ -43,7 +43,7 @@ class FileController extends Controller
         
       if($directory == self::PROPERTY) {
          $directories = $this->getDirectoies($directory);
-         return view('files.property-types',compact('directories'));
+         return view('files.files',compact('directories'));
       } 
       elseif(in_array($directory,$directories)) {
          $files = \Storage::disk('public')->files($directory);
