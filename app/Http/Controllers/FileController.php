@@ -35,14 +35,15 @@ class FileController extends Controller
     {
        $directories = [
         self::PROPERTIES,  
-        self::PROPERTY,  
-        self::USERS  
+        // self::PROPERTY,  
+        // self::USERS  
        ];
 
        $files = [];
         
-      if($directory == self::PROPERTY) {
-         $directories = $this->getDirectoies($directory);
+      if($directory == self::PROPERTIES) {
+           
+         $directories = $this->getDirectoies(self::PROPERTY);
          return view('files.files',compact('directories'));
       } 
       elseif(in_array($directory,$directories)) {
@@ -52,7 +53,6 @@ class FileController extends Controller
       return view('files.index',compact('directories','files')); 
 
     }
-
     /**
      * Show the application dashboard.
      *
@@ -61,6 +61,7 @@ class FileController extends Controller
 
     public function propertyType(Request $request, $directory, $propertyType)
     {
+         $directory = self::PROPERTY;
          $files = [];
          $directories = $this->getDirectoies($directory, true, $directory.'/'.$propertyType);
 
@@ -71,6 +72,7 @@ class FileController extends Controller
 
     public function property(Request $request, $directory, $propertyType,$property)
     {
+         $directory = self::PROPERTY;
          $files = [];
          $directories = $this->getDirectoies($directory, true, $directory.'/'.$propertyType.'/'.$property);
     
@@ -80,8 +82,10 @@ class FileController extends Controller
 
     public function docType(Request $request, $directory, $propertyType,$property,$docType)
     {
+         $directory = self::PROPERTY;
          $directories = [];
          $files = $this->getDirectoies($directory, true, $directory.'/'.$propertyType.'/'.$property.'/'.$docType);
+
          return view('files.files',compact('directories','files'));
     
     }

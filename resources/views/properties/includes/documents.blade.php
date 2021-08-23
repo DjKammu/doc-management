@@ -61,6 +61,10 @@
                                   <a href="{{ request()->property }}/documents/{{ $document->id }}">                     
                                   <h6 class="title mb-0">{{ @$document->name }}</h6>
                                    </a>
+                                   <span class="doc-type"> 
+                                    {{  @$document->document_type->name }}
+                                    {{ (!$document->file) ? ' - M' : '' }}
+                                    </span>
                                </div>
                             </div>
                          </div>
@@ -94,6 +98,12 @@ button.btn.btn-neutral.bg-transparent.btn-icon{
 }
 td{
   width: 100%;
+}
+
+span.doc-type{
+ font-size: 12px;
+ padding-top: 8ppx;
+ display: block;
 }
 </style>
 @endsection

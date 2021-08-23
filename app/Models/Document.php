@@ -9,6 +9,9 @@ class Document extends Model
 {
     use HasFactory;
 
+     CONST ARCHIEVED = 'archived';
+     CONST PROPERTY = 'property';
+
      protected $fillable = [
      'name' , 'slug' ,'account_number',
      'file','property_id',

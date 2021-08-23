@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ProprtyType;
+use App\Models\Document;
 use Gate;
 
 
@@ -77,7 +78,7 @@ class ProprtyTypeController extends Controller
         $path = public_path().'/property/' . $data['slug'];
         \File::makeDirectory($path, $mode = 0777, true, true);
 
-        return redirect('property-types')->with('message', 'Proprty Type Created Successfully!');
+        return redirect('property-types')->with('message', 'Property Type Created Successfully!');
     }
 
     /**
@@ -146,7 +147,7 @@ class ProprtyTypeController extends Controller
 
          $type->update($data);
 
-        return redirect('property-types')->with('message', 'Proprty Type Updated Successfully!');
+        return redirect('property-types')->with('message', 'Property Type Updated Successfully!');
     }
 
     /**
@@ -161,8 +162,13 @@ class ProprtyTypeController extends Controller
                return abort('401');
           } 
 
-         ProprtyType::find($id)->delete();
+         $proprty_type = ProprtyType::find($id);
+         $path = public_path().'/'. Document::PROPERTY.'/'; 
+         @\File::copyDirectory($path.$proprty_type->slug, $path.Document::ARCHIEVED);
+         @\File::deleteDirectory($path.$proprty_type->slug);
 
-        return redirect()->back()->with('message', 'Proprty Type Delete Successfully!');
+         $proprty_type->delete();       
+
+        return redirect()->back()->with('message', 'Property Type Delete Successfully!');
     }
 }

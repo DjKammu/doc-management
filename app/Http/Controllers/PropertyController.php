@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\DocumentType;
+use App\Models\Document;
 use App\Models\ProprtyType;
 use App\Models\Property;
 use Gate;
@@ -149,7 +150,8 @@ class PropertyController extends Controller
             });
          } 
 
-         $documents = $documents->paginate((new Property())->perPage);
+         $documents = $documents->with('document_type')
+                    ->paginate((new Property())->perPage);
 
         $documents->filter(function($doc){
 
@@ -161,7 +163,11 @@ class PropertyController extends Controller
 
             $property_type_slug = @ProprtyType::find($property->proprty_type_id)->slug;
 
-            $folderPath = "property/$property_type_slug/$property_slug/$document_type/";
+             $folderPath = Document::PROPERTY."/";
+
+            $property_type_slug = ($property_type_slug) ? $property_type_slug : Document::ARCHIEVED;
+
+            $folderPath .= "$property_type_slug/$property_slug/$document_type/";
             
             $files = $doc->files();
 
@@ -229,20 +235,34 @@ class PropertyController extends Controller
         }
         
         $oldProprty_type = ProprtyType::find($property->proprty_type_id);
-        
-        if((@$oldProprty_type->id != $request->proprty_type_id) || 
+        $proprty_type = ProprtyType::find($request->proprty_type_id);
+
+        if(!$oldProprty_type){
+
+                $public_path = public_path().'/'.Document::PROPERTY.'/';
+                $folderPath =  $proprty_type->slug.'/'.$oldSlug;
+                $oldFolderPath = Document::ARCHIEVED.'/'.$oldSlug; 
+               \File::copyDirectory($public_path.$oldFolderPath,$public_path.$folderPath); 
+               \File::deleteDirectory($public_path.$oldFolderPath);
+               
+               if($slug  != $oldSlug){
+                  $path = public_path().'/'.Document::PROPERTY.'/'.@$proprty_type->slug.'/';
+                  @rename($path.$oldSlug, $path.$slug); 
+               }
+
+        }
+        elseif((@$oldProprty_type->id != $request->proprty_type_id) || 
             ($slug != $oldSlug)){
              
              if($slug  != $oldSlug){
-                 $path = public_path().'/property/'.@$oldProprty_type->slug.'/';
+                 $path = public_path().'/'.Document::PROPERTY.'/'.@$oldProprty_type->slug.'/';
                  @rename($path.$oldSlug, $path.$slug); 
              }
 
-             $proprty_type = ProprtyType::find($request->proprty_type_id);
 
              if(@$oldProprty_type->id != $request->proprty_type_id)
              { 
-               $path = public_path().'/property/';
+               $path = public_path().'/'.Document::PROPERTY.'/';
                $propertyDir  = ($slug  != $oldSlug) ? $slug : $oldSlug;
                 \File::copyDirectory($path.@$oldProprty_type->slug.'/'.$propertyDir,
                  $path.$proprty_type->slug.'/'.$propertyDir); 
@@ -274,7 +294,7 @@ class PropertyController extends Controller
 
          $proprty_type_slug = @$proprty_type->slug;
 
-         $path = @public_path().'/property/'.$proprty_type_slug.'/'.$proprty_slug;
+         $path = @public_path().'/'.Document::PROPERTY.'/'.$proprty_type_slug.'/'.$proprty_slug;
 
          @\File::deleteDirectory($path);
 

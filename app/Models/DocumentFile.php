@@ -11,7 +11,7 @@ class DocumentFile extends Model
 
 
    protected $fillable = [
-	     'file' 
+	     'file','name'
 	 ];
 
     public function document(){

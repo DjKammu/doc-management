@@ -127,7 +127,12 @@ class DocumentController extends Controller
 
         $public_path = public_path().'/';
 
-        $folderPath = 'property/'.$proprty_type_slug.'/'.$propperty_slug.'/'.$document_type_slug;
+        $folderPath = Document::PROPERTY."/";
+
+        $proprty_type_slug = ($proprty_type_slug) ? $proprty_type_slug : Document::ARCHIEVED;
+
+        $folderPath .= $proprty_type_slug.'/'.$propperty_slug.'/'.$document_type_slug;
+
 
         \File::makeDirectory($public_path.$folderPath, $mode = 0777, true, true);
 
@@ -173,12 +178,15 @@ class DocumentController extends Controller
 
         $property_type_slug = @ProprtyType::find($property->proprty_type_id)->slug;
 
-        $folderPath = "property/$property_type_slug/$property_slug/$document_type/";
+        $folderPath = Document::PROPERTY."/";
+
+        $property_type_slug = ($property_type_slug) ? $property_type_slug : Document::ARCHIEVED;  
+        $folderPath .= "$property_type_slug/$property_slug/$document_type/";
 
 
        $document->files->filter(function($file) use ($folderPath){
 
-        $file->file = asset($folderPath.$file->file);
+        $file->file = ($folderPath.$file->file);
 
          return $file->file;
        
@@ -245,11 +253,15 @@ class DocumentController extends Controller
 
         $public_path = public_path().'/';
 
-        $folderPath = 'property/'.$proprty_type_slug.'/'.$propperty_slug.'/'.$document_type_slug;
+        $folderPath = Document::PROPERTY."/";
+
+        $proprty_type_slug = ($proprty_type_slug) ? $proprty_type_slug : Document::ARCHIEVED;
+
+        $folderPath .= $proprty_type_slug.'/'.$propperty_slug.'/'.$document_type_slug;
         
         if(($old_document_type->id != $request->document_type_id)){
              
-               $oldFolderPath = 'property/'.$proprty_type_slug.'/'.$propperty_slug.'/'.$old_document_type->slug;   
+               $oldFolderPath = Document::PROPERTY.'/'.$proprty_type_slug.'/'.$propperty_slug.'/'.$old_document_type->slug;   
 
                \File::copyDirectory($public_path.$oldFolderPath,$public_path.$folderPath); 
                \File::deleteDirectory($public_path.$oldFolderPath);
@@ -261,10 +273,12 @@ class DocumentController extends Controller
         if($request->hasFile('file')){
                $filesArr = [];
                $files = $request->file('file');
+               $dnames = $request->dname;
                foreach ($files as $key => $file) {
-                  $fileName = $document_type_slug.'-'.time().$key.'.'. $file->getClientOriginalExtension();
+                  $dname = (!$dnames[$key]) ? $request->name :  $dnames[$key];
+                  $fileName = \Str::slug($dname).'-'.time().$key.'.'. $file->getClientOriginalExtension();
                   $file->storeAs($folderPath, $fileName, 'doc_upload');
-                  $filesArr[]  = ['file' => $fileName];
+                  $filesArr[]  = ['file' => $fileName,'name' => $dname];
                }
                 $document->files()->createMany($filesArr);
         }
@@ -296,8 +310,11 @@ class DocumentController extends Controller
 
          $property_type_slug = @ProprtyType::find($property->proprty_type_id)->slug;
 
+        $folderPath = Document::PROPERTY."/";
 
-         $folderPath = "property/$property_type_slug/$property_slug/$document_type/";
+        $property_type_slug = ($property_type_slug) ? $property_type_slug : Document::ARCHIEVED;
+
+         $folderPath .= "$property_type_slug/$property_slug/$document_type/";
 
          $path = @public_path().'/'.$folderPath;
 
