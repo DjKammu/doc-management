@@ -3,6 +3,8 @@
 @section('title', 'Edit Property')
 
 @section('content')
+
+@include('includes.back')
       <!-- Start Main View -->
   <div class="card p-2">
     <div class="row">
@@ -22,6 +24,7 @@
                    {{implode(',',$errors->all() )}}
                 </div>
              @endif
+
 
             <div class="card-body">
               <div class="row mb-2">
