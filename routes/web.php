@@ -83,3 +83,8 @@ Route::get('files/{directory}/{property_type}',[App\Http\Controllers\FileControl
 Route::get('files/{directory}/{property_type}/{property}',[App\Http\Controllers\FileController::class,'property'])->name('files.property');
 
 Route::get('files/{directory}/{property_type}/{property}/{doc_type}',[App\Http\Controllers\FileController::class,'docType'])->name('files.doc_type');
+
+
+Route::get('files/{directory}/{property_type}/{property}/{doc_type}/{doc}',[App\Http\Controllers\FileController::class,'doc'])->name('files.doc');
+
+Route::delete('files', [App\Http\Controllers\FileController::class,'destroy'])->name('files.destroy');

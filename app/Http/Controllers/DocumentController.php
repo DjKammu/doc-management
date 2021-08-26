@@ -320,8 +320,12 @@ class DocumentController extends Controller
 
          $files = $document->files()->get();
 
-
+         $aPath = public_path().'/'. Document::PROPERTY."/".Document::ARCHIEVED.'/'. Document::DOCUMENTS; 
+         \File::makeDirectory($aPath, $mode = 0777, true, true);
+         
          foreach (@$files as $key => $file) {
+            $proprty_type = ProprtyType::find($id);
+            @\File::copy($path.$file->file, $aPath.'/'.$file->file);
             @unlink($path.$file->file);
          }
 
@@ -339,6 +343,14 @@ class DocumentController extends Controller
           $path = request()->path;
 
           $file = DocumentFile::find($id);
+
+          $publicPath = public_path().'/';
+
+          $aPath = $publicPath.Document::PROPERTY."/".Document::ARCHIEVED.'/'. Document::DOCUMENTS; 
+
+          @\File::makeDirectory($aPath, $mode = 0777, true, true);
+        
+          @\File::copy($publicPath.$path, $aPath.'/'.$file->file);
 
           @unlink($path);
 

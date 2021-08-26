@@ -294,7 +294,21 @@ class PropertyController extends Controller
 
          $proprty_type_slug = @$proprty_type->slug;
 
-         $path = @public_path().'/'.Document::PROPERTY.'/'.$proprty_type_slug.'/'.$proprty_slug;
+         $public_path = public_path().'/';
+
+         $folderPath = Document::PROPERTY."/";
+
+         $proprty_type_slug = ($proprty_type_slug) ? $proprty_type_slug : Document::ARCHIEVED; 
+
+         $folderPath .= "$proprty_type_slug/$proprty_slug";
+
+         $path = $public_path.'/'.$folderPath;
+          
+         $aPath = public_path().'/'. Document::PROPERTY.'/'.Document::ARCHIEVED.'/'. Document::PROPERTIES; 
+         
+         @\File::makeDirectory($aPath, $mode = 0777, true, true);
+
+         @\File::copyDirectory($path, $aPath.'/'.$proprty_slug);
 
          @\File::deleteDirectory($path);
 

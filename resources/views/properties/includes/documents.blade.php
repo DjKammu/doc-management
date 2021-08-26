@@ -62,9 +62,9 @@
                                   <h6 class="title mb-0">{{ @$document->name }}</h6>
                                    </a>
                                    <span class="doc-type"> 
-                                    {{  @$document->document_type->name }}
-                                    {{ (!$document->file) ? ' - M' : '' }}
-                                    </span>
+                                    {{  @$document->document_type->name }}</span>
+                                    <span class="doc_type_m">{{ (!$document->file) ? 'Multiple' : '' }}</span>
+                                    
                                </div>
                             </div>
                          </div>
@@ -102,8 +102,15 @@ td{
 
 span.doc-type{
  font-size: 12px;
- padding-top: 8ppx;
+ padding-top: 8px;
  display: block;
 }
+
+span.doc_type_m{
+ font-size: 10px;
+ padding-top: 3px;
+ display: block;
+}
+
 </style>
 @endsection

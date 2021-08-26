@@ -82,7 +82,7 @@
 
                                     <!-- Submit Button -->
                                     <div class="col-12 text-center">
-                                        <button id="change-password-button" type="submit" class="btn btn-danger">Create Document Type
+                                        <button id="change-password-button" type="submit" class="btn btn-danger">Create Document
                                         </button>
                                     </div>
 

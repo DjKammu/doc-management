@@ -6,15 +6,32 @@
 
  <!-- Start Main View -->
                 <!-- Dashboard Overview -->
-<div class="row">
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    @foreach($breadcrumbs as $breadcrumb)
+    <li class="breadcrumb-item"><a href="{{ url($breadcrumb['link']) }}">{{ \Str::title(str_replace('-', ' ', $breadcrumb['name'])) }} </a></li>
+    @endforeach
+    <li class="breadcrumb-item active" aria-current="page">{{ @ucfirst(last(request()->segments()))}}</li>
+  </ol>
+</nav>
 
-   
-    
+<div class="row">
 
  @if(!empty($files))
    @foreach($files as $file)      
     <div class="col-lg-4 col-md-6 col-sm-6">
         <div class="card card-stats">
+            @if(@$removable)
+            <span class="cross"> 
+             <form method="post" action="{{route('files.destroy')}}?path={{$file['path']}}"> 
+                                                 @csrf
+                                                {{ method_field('DELETE') }}
+
+                <button type="submit" onclick="return confirm('Are you sure to delete it? Make sure you can`t retrieve from archive!')" class="btn btn-neutral bg-transparent btn-icon" data-original-title="Delete Property Type" title="Delete Property Type"><i class="fa fa-trash text-danger"></i> </button>
+              </form>
+            </span>
+            @endif 
+
             <div class="card-body ">
                 <div class="row">
                     <div class="col-5 col-md-4">
@@ -78,4 +95,23 @@
 </div>
 
 
+@endsection
+
+
+@section('pagescript')
+
+<style type="text/css">
+  
+span.cross{
+    position: absolute;
+    z-index: 10;
+    right: 6px;
+     display: none; 
+    bottom: -16px;
+}
+.card.card-stats:hover span.cross{
+  display: block;
+}
+
+</style>
 @endsection

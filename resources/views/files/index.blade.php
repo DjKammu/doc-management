@@ -6,10 +6,13 @@
 
  <!-- Start Main View -->
                 <!-- Dashboard Overview -->
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active">Files</li>
+  </ol>
+</nav>
 <div class="row">
-
-   
-
 
  @if(!empty($files))
    @foreach($files as $directory)      

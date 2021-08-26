@@ -99,7 +99,7 @@
                              
                               <!-- Submit Button -->
                               <div class="col-12 text-center">
-                                  <button type="submit" class="btn btn-danger">Update Document Type
+                                  <button type="submit" class="btn btn-danger">Update Document
                                   </button>
                               </div>
 
