@@ -116,7 +116,7 @@ aria-expanded="true">
 
                 <!-- Submit Button -->
                 <div class="col-12 text-center">
-                    <button id="change-password-button" type="submit" class="btn btn-danger">Update Property Type
+                    <button id="change-password-button" type="submit" class="btn btn-danger">Update Property
                     </button>
                 </div>
 
