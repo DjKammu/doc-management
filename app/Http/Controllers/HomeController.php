@@ -99,4 +99,10 @@ class HomeController extends Controller
 
     }
 
+
+    public function setup(){
+
+        return view('setup');
+    }
+
 }

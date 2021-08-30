@@ -53,6 +53,8 @@ Route::post('/profile', [App\Http\Controllers\HomeController::class, 'updateProf
 
 Route::post('/password', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('password');
 
+Route::get('/setup', [App\Http\Controllers\HomeController::class, 'setup'])->name('setup');
+
 Route::resource('property-types', App\Http\Controllers\ProprtyTypeController::class);
 
 Route::resource('properties', App\Http\Controllers\PropertyController::class);
@@ -88,3 +90,5 @@ Route::get('files/{directory}/{property_type}/{property}/{doc_type}',[App\Http\C
 Route::get('files/{directory}/{property_type}/{property}/{doc_type}/{doc}',[App\Http\Controllers\FileController::class,'doc'])->name('files.doc');
 
 Route::delete('files', [App\Http\Controllers\FileController::class,'destroy'])->name('files.destroy');
+
+Route::resource('bussiness-types', App\Http\Controllers\BussinessTypeController::class);

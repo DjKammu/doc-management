@@ -82,13 +82,13 @@
             @can('view')
 
             <!-- Property Types -->
-             <li class="{{ Request::is('property-types*') ? 'active' : '' }}">
+             <!-- <li class="{{ Request::is('property-types*') ? 'active' : '' }}">
                 <a href="{{ route('property-types.index') }}">
-                    <!-- <i class="nc-icon nc-bank"></i> -->
+                    <i class="nc-icon nc-bank"></i>
                     <i class="fa fa-list-ol"></i>
                     <p>Property Types</p>
                 </a>
-            </li>
+            </li> -->
 
             @endcan 
 
@@ -96,13 +96,13 @@
             @can('view')
 
             <!-- Property Types -->
-             <li class="{{ Request::is('document-types*') ? 'active' : '' }}">
+            <!--  <li class="{{ Request::is('document-types*') ? 'active' : '' }}">
                 <a href="{{ route('document-types.index') }}">
-                    <!-- <i class="nc-icon nc-bank"></i> -->
+                    <i class="nc-icon nc-bank"></i>
                     <i class="fa fa-file"></i>
                     <p>Document Types</p>
                 </a>
-            </li>
+            </li> -->
 
             @endcan
 
@@ -110,11 +110,24 @@
             @can('view')
 
             <!-- Property Types -->
-             <li class="{{ Request::is('files*') ? 'active' : '' }}">
+             <!-- <li class="{{ Request::is('files*') ? 'active' : '' }}">
                 <a href="{{ route('files.index') }}">
-                    <!-- <i class="nc-icon nc-bank"></i> -->
+                    <i class="nc-icon nc-bank"></i>
                     <i class="fa fa-folder"></i>
                     <p>Files</p>
+                </a>
+            </li> -->
+
+            @endcan
+
+            @can('view')
+
+            <!-- Property Types -->
+             <li class="{{ Request::is('setup*') ? 'active' : '' }}">
+                <a href="{{ route('setup') }}">
+                    <!-- <i class="nc-icon nc-bank"></i> -->
+                    <i class="fa fa-cog"></i>
+                    <p>Setup</p>
                 </a>
             </li>
 
@@ -122,22 +135,22 @@
            
               @can('add_users')
              <!-- Property Types -->
-             <li class="{{ Request::is('roles*') ? 'active' : '' }}">
+             <!-- <li class="{{ Request::is('roles*') ? 'active' : '' }}">
                 <a href="{{ route('roles.index') }}">
-                    <!-- <i class="nc-icon nc-bank"></i> -->
+                    <i class="nc-icon nc-bank"></i>
                     <i class="fa fa-user-circle"></i>
                     <p>Roles</p>
                 </a>
-            </li>
+            </li> -->
        
              <!-- Property Types -->
-             <li class="{{ Request::is('users*') ? 'active' : '' }}">
+             <!-- <li class="{{ Request::is('users*') ? 'active' : '' }}">
                 <a href="{{ route('users.index') }}">
-                    <!-- <i class="nc-icon nc-bank"></i> -->
+                    <i class="nc-icon nc-bank"></i>
                     <i class="fa fa-user"></i>
                     <p>Users</p>
                 </a>
-            </li>
+            </li> -->
             @endcan
 
         </ul>
