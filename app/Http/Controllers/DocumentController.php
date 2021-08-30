@@ -143,10 +143,18 @@ class DocumentController extends Controller
         if($request->hasFile('file')){
                $filesArr = [];
                $files = $request->file('file');
+               $name = $request->name;
+               $date = @$request->date ?? '';
+               $month = @$request->month ?? '';
+               $year = @$request->year ?? '';
+
                foreach ($files as $key => $file) {
-                  $fileName = $document_type_slug.'-'.time().$key.'.'. $file->getClientOriginalExtension();
+                  $fileName = \Str::slug($name).'-'.time().$key.'.'. $file->getClientOriginalExtension();
                   $file->storeAs($folderPath, $fileName, 'doc_upload');
-                  $filesArr[]  = ['file' => $fileName];
+                  $filesArr[]  = ['file' => $fileName,'name' => $name,
+                                  'date' => $date,'month' => $month,
+                                  'year' => $year
+                                  ];
                }
                 $document->files()->createMany($filesArr);
         }
@@ -269,16 +277,21 @@ class DocumentController extends Controller
 
         $document->update($data);
 
-
         if($request->hasFile('file')){
                $filesArr = [];
                $files = $request->file('file');
                $dnames = $request->dname;
+               $date = @$request->date ?? '';
+               $month = @$request->month ?? '';
+               $year = @$request->year ?? '';
+
                foreach ($files as $key => $file) {
                   $dname = (!$dnames[$key]) ? $request->name :  $dnames[$key];
                   $fileName = \Str::slug($dname).'-'.time().$key.'.'. $file->getClientOriginalExtension();
                   $file->storeAs($folderPath, $fileName, 'doc_upload');
-                  $filesArr[]  = ['file' => $fileName,'name' => $dname];
+                  $filesArr[]  = ['file' => $fileName,'name' => $dname, 
+                                  'date' => $date,'month' => $month,
+                                  'year' => $year];
                }
                 $document->files()->createMany($filesArr);
         }
