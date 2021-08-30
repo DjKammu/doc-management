@@ -91,7 +91,7 @@
                                                 name="year"> 
                                                   <option value=""> Select Year</option>
 
-                                                  @for($i = date('Y'); $i <= date('Y') + 50; $i++)
+                                                  @for($i = date('Y'); $i >= date('Y') - 50; $i--)
                                                     <option value="{{ $i }}" 
                                                     {{ ($i == date('Y') ? 'selected' : '')}}
                                                     >{{ $i }}
