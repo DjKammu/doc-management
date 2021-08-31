@@ -388,7 +388,7 @@ class DocumentController extends Controller
           $property_type = ProprtyType::where('name',request()->property_type)
                            ->with('properties')->first(); 
 
-          $properties = @$property_type->properties()->pluck('id');
+          $properties = @$property_type->properties->pluck('id');
 
           $docsIds = Document::propertyIds($properties)->pluck('id'); 
                          
@@ -398,7 +398,7 @@ class DocumentController extends Controller
           $property = Property::where('id',request()->property)
                            ->with('documents')->first(); 
 
-          $docsIds = @$property->documents()->pluck('id');
+          $docsIds = @$property->documents->pluck('id');
 
           $docsIds = $docsIds->merge($docsIds);
                          
