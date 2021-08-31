@@ -407,9 +407,6 @@ class DocumentController extends Controller
             });            
 
           }
-          else{
-             $docsIds = $docsIds->merge($docsIds); 
-          }
 
          }
 
@@ -426,9 +423,7 @@ class DocumentController extends Controller
             });            
 
           }
-          else{
-             $docsIds = $docsIds->merge($docsIds); 
-          }
+          
          }
           
 
