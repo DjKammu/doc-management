@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class DocumentFile extends Model
 {
     use HasFactory;
-
+    
+    protected $perPage = 60;
 
    protected $fillable = [
 	     'file','name',
@@ -18,6 +19,10 @@ class DocumentFile extends Model
 
     public function document(){
     	return $this->belongsTo(Document::class);
+    }
+
+    public function scopeDocIds($query,$ids){
+         return $query->whereIn('document_id',$ids);
     }
 
 }

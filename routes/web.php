@@ -65,6 +65,9 @@ Route::resource('users', App\Http\Controllers\UserController::class)->middleware
 
 Route::resource('document-types', App\Http\Controllers\DocumentTypeController::class);
 
+
+Route::get('documents/search', [App\Http\Controllers\DocumentController::class,'search'])->name('documents.search');
+
 Route::resource('documents', App\Http\Controllers\DocumentController::class);
 
 Route::get('properties/{id}/documents',[App\Http\Controllers\DocumentController::class,'create'])
@@ -76,6 +79,7 @@ Route::post('properties/{id}/documents',[App\Http\Controllers\DocumentController
 ->name('properties.documents');
 
 Route::delete('documents/{id}/file', [App\Http\Controllers\DocumentController::class,'destroyFile'])->name('documents.file.destroy');
+
 
 
 Route::get('files/{directory?}',[App\Http\Controllers\FileController::class,'index'])->name('files.index');

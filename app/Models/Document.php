@@ -33,4 +33,8 @@ class Document extends Model
     public function files(){
         return $this->hasMany(DocumentFile::class);
     }
+
+    public function scopePropertyIds($query,$ids){
+         return $query->whereIn('property_id',$ids);
+    }
 }

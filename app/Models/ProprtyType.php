@@ -14,4 +14,8 @@ class ProprtyType extends Model
     protected $fillable = [
      'name' , 'slug' ,'account_number'
     ];
+
+    public function properties(){
+    	return $this->hasMany(Property::class);
+    }
 }

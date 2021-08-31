@@ -14,4 +14,8 @@ class DocumentType extends Model
     protected $fillable = [
      'name' , 'slug' ,'account_number'
     ];
+
+     public function documents(){
+    	return $this->hasMany(Document::class);
+    }
 }
