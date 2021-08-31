@@ -385,7 +385,7 @@ class DocumentController extends Controller
          $documents = DocumentFile::query();
 
          if(request()->filled('property_type')){
-          $property_type = ProprtyType::where('name',request()->property_type)
+          $property_type = ProprtyType::where('slug',request()->property_type)
                            ->with('properties')->first(); 
 
           $properties = @$property_type->properties->pluck('id');
