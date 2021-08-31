@@ -173,9 +173,9 @@ class PropertyController extends Controller
 
             $file =  ($files->count() == 1) ? $files->pluck('file')->first() : '';
 
-             $doc->file = ($file  ? asset($folderPath.$file) : '') ;
+            $doc->file = ($file  ? asset($folderPath.$file) : '') ;
 
-             return $doc->file;
+            return $doc->file;
            
          });
 

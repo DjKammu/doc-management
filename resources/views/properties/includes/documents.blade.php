@@ -63,7 +63,9 @@
                                    </a>
                                    <span class="doc-type"> 
                                     {{  @$document->document_type->name }}</span>
-                                    <span class="doc_type_m">{{ (!$document->file) ? 'Multiple' : '' }}</span>
+                                    <span class="doc_type_m">
+                                      {{ (!$document->file) ? 'Multiple' : '' }}
+                                    </span>
                                     
                                </div>
                             </div>

@@ -124,13 +124,13 @@
             @can('view')
 
             <!-- Property Types -->
-             <!-- <li class="{{ Request::is('files*') ? 'active' : '' }}">
+             <li class="{{ Request::is('files*') ? 'active' : '' }}">
                 <a href="{{ route('files.index') }}">
-                    <i class="nc-icon nc-bank"></i>
+                    <!-- <i class="nc-icon nc-bank"></i> -->
                     <i class="fa fa-folder"></i>
                     <p>Files</p>
                 </a>
-            </li> -->
+            </li>
 
             @endcan
 

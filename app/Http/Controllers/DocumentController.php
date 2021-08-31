@@ -281,9 +281,9 @@ class DocumentController extends Controller
                $filesArr = [];
                $files = $request->file('file');
                $dnames = $request->dname;
-               $date = @$request->date ?? '';
-               $month = @$request->month ?? '';
-               $year = @$request->year ?? '';
+               $date = @$request->date ?? 0;
+               $month = @$request->month ?? 0;
+               $year = @$request->year ?? 0;
 
                foreach ($files as $key => $file) {
                   $dname = (!$dnames[$key]) ? $request->name :  $dnames[$key];
