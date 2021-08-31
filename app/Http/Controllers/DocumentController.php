@@ -407,7 +407,11 @@ class DocumentController extends Controller
             });            
 
           }
-
+          // else{
+          //    $docsIds = $docsIds->merge($docsIds); 
+          // }
+           
+           // dd($docsIds);
          }
 
          if(request()->filled('document_type')){
@@ -423,7 +427,12 @@ class DocumentController extends Controller
             });            
 
           }
-          
+          // else{
+          //    $docsIds = $docsIds->merge($docsIds); 
+          // }
+
+         // dd($docsIds);
+
          }
           
 
