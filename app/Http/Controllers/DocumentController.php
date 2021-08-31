@@ -408,7 +408,7 @@ class DocumentController extends Controller
 
           }
           else{
-             $docsIds = $docsIds->merge($pDocsIds); 
+             $docsIds = $pDocsIds->merge($docsIds); 
           }
            
            // dd($docsIds);
@@ -428,7 +428,7 @@ class DocumentController extends Controller
 
           }
           else{
-             $docsIds = $docsIds->merge($dDocsIds); 
+             $docsIds = $dDocsIds->merge($docsIds); 
           }
 
          // dd($docsIds);
