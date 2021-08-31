@@ -390,28 +390,45 @@ class DocumentController extends Controller
 
           $properties = @$property_type->properties->pluck('id');
 
-          $docsIds = Document::propertyIds($properties)->pluck('id'); 
-                         
+          $docsIds = Document::propertyIds($properties)->pluck('id');
+
          }
 
          if(request()->filled('property')){
           $property = Property::where('id',request()->property)
                            ->with('documents')->first(); 
 
-          $docsIds = @$property->documents->pluck('id');
+          $pDocsIds = @$property->documents->pluck('id');
 
-          $docsIds = $docsIds->merge($docsIds);
-                         
+          if($docsIds){
+
+            $docsIds = $docsIds->filter(function ($value, $key) use ($pDocsIds){
+                return $pDocsIds->contains($value);
+            });            
+
+          }
+          else{
+             $docsIds = $docsIds->merge($docsIds); 
+          }
+
          }
 
          if(request()->filled('document_type')){
           $document_type = DocumentType::where('slug',request()->document_type)
                            ->with('documents')->first(); 
           
-          $docsIds = $document_type->documents->pluck('id');
+          $dDocsIds = $document_type->documents->pluck('id');
 
-          $docsIds = $docsIds->merge($docsIds);
-             
+          if($docsIds){
+
+            $docsIds = $docsIds->filter(function ($value, $key) use ($dDocsIds){
+                return $dDocsIds->contains($value);
+            });            
+
+          }
+          else{
+             $docsIds = $docsIds->merge($docsIds); 
+          }
          }
           
 
