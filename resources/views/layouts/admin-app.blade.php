@@ -19,7 +19,7 @@
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
 
     <link href="{{ asset('css/paper-dashboard.css?v=2.1.1') }}" rel="stylesheet" />
-    <link href="{{ asset('css/custom.css?v=2.1') }}" />
+    <link href="{{ asset('css/custom.css') }}" />
 
     <!--   Core JS Files   -->
     <script src="{{ asset('js/core/jquery.min.js') }}"></script>
