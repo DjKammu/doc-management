@@ -280,7 +280,7 @@ span.cross{
 }
 span.doc-type{
  font-size: 12px;
- padding-top: 8px;
+padding: 8px 0px;
  display: block;
 }
 tr:hover span.cross{
