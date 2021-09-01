@@ -176,6 +176,22 @@
                                  </thead>
                                  <tbody class="row">
                                   @foreach($document->files as $file)
+
+                                   @php
+                                     $fileInfo = pathinfo($file->file);
+                                     $extension = $fileInfo['extension'];
+                                    
+                                  if(in_array($extension,['doc','docx','docm','dot',
+                                  'dotm','dotx'])){
+                                      $extension = 'word'; 
+                                   }
+                                   else if(in_array($extension,['csv','dbf','dif','xla',
+                                  'xls','xlsb','xlsm','xlsx','xlt','xltm','xltx'])){
+                                      $extension = 'excel'; 
+                                   }
+
+                                   @endphp
+
                                     <tr class="text-center col-lg-2 col-sm-3 odd" style="display: flex; flex-wrap: wrap;" role="row">
                                        <td>
                                             <span class="cross"> 
@@ -200,7 +216,7 @@
                                                     </span></br>
                                                     <a href="{{ url($file->file) }}" target="_blank">
                                                       <p> {{ @$file->name }} </p>
-                                                      <img class="avatar border-gray" src="{{ asset('img/pdf.png') }}">
+                                                      <img class="avatar border-gray" src="{{ asset('img/'.$extension.'.png') }}">
                                                       </a> 
                                                        <span class="doc-type"> 
                                                       {{  @$file->document->document_type->name }}</span>              

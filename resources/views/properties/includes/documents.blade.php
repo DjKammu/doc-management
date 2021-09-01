@@ -36,6 +36,26 @@
              </thead>
              <tbody class="row">
                @foreach($documents as $document)
+
+                   @php
+                     $fileInfo = pathinfo($document->file); 
+                       $extension = @$fileInfo['extension'];
+                    
+                        if(in_array($extension,['doc','docx','docm','dot',
+                      'dotm','dotx'])){
+                          $extension = 'word'; 
+                       }
+                       else if(in_array($extension,['csv','dbf','dif','xla',
+                      'xls','xlsb','xlsm','xlsx','xlt','xltm','xltx'])){
+                          $extension = 'excel'; 
+                       }
+                     
+                      if(!$extension){
+                        $extension = 'pdf';
+                      }
+
+                   @endphp
+
                 <tr class="text-center col-lg-2 col-sm-3 odd" style="display: flex; flex-wrap: wrap;" role="row">
                    <td>
                         <span class="cross">
@@ -58,7 +78,7 @@
                                     {{ @$document->property->property_name }} 
                                   </span></br>
                                  <a  href="{{ ($document->file) ? $document->file : route('properties.documents.show', ['id' => request()->property, 'document' => $document->id ]) }}" {{ ($document->file) ? 'target="_blank"' : '' }} >
-                                  <img class="avatar border-gray" src="{{ asset('img/pdf.png') }}">  
+                                  <img class="avatar border-gray" src="{{ asset('img/'.$extension.'.png') }}">  
                                    </a>
                                   <a href="{{ request()->property }}/documents/{{ $document->id }}">                     
                                   <h6 class="title mb-0">{{ @$document->name }}</h6>
