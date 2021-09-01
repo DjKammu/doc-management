@@ -88,11 +88,15 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
   }
 }
 
-.shadow-sm{
-  display: none;
+.shadow-sm {
+    display: none !important;
 }
-
-.hidden.sm\:flex-1.sm\:flex.sm\:items-center.sm\:justify-between,
-nav.flex.items-center.justify-between{
-  margin-top: 15px;
+nav.flex.items-center.justify-between {
+    margin: 50px 0 !important;
+}
+.hidden.sm\:flex-1.sm\:flex.sm\:items-center.sm\:justify-between {
+    margin-top: 20px;
+}
+.hidden.sm\:flex-1.sm\:flex.sm\:items-center.sm\:justify-between span.relative.z-0.inline-flex.shadow-sm.rounded-md{
+    display: none;
 }
