@@ -88,7 +88,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
   }
 }
 
-span.relative.z-0.inline-flex.shadow-sm.rounded-md{
+.shadow-sm{
   display: none;
 }
 
