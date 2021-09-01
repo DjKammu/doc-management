@@ -54,7 +54,9 @@
                          <div class="card card-table-item" style="width: 100%; height: 100%;">
                             <div class="card-body pb-0">
                                <div class="author mt-1">
-                              
+                                  <span class="doc_type_m">
+                                    {{ @$document->property->property_name }} 
+                                  </span></br>
                                  <a  href="{{ ($document->file) ? $document->file : route('properties.documents.show', ['id' => request()->property, 'document' => $document->id ]) }}" {{ ($document->file) ? 'target="_blank"' : '' }} >
                                   <img class="avatar border-gray" src="{{ asset('img/pdf.png') }}">  
                                    </a>
@@ -64,7 +66,7 @@
                                    <span class="doc-type"> 
                                     {{  @$document->document_type->name }}</span>
                                     <span class="doc_type_m">
-                                      {{ (!$document->file) ? 'Multiple' : '' }}
+                                      {{ (!$document->file) && $document->files()->exists() ? 'Multiple' : '' }}
                                     </span>
                                     
                                </div>

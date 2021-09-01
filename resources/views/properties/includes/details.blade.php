@@ -12,7 +12,7 @@ aria-expanded="true">
                         <div class="form-group">
                             <label class="text-dark" for="password">Name 
                             </label>
-                            <input  name="property_name" value="{{ $property->property_name }}" type="text" class="form-control" placeholder="Proprty Name" required="">
+                            <input  name="property_name" value="{{ $property->property_name }}" type="text" class="form-control" placeholder="Property Name" required="">
                         </div>
                     </div>
                 </div>

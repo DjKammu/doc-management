@@ -195,10 +195,15 @@
                                              style="width: 100%;">
                                                 <div class="card-body pb-0">
                                                    <div class="author mt-1">
+                                                    <span class="doc_type_m">
+                                                      {{ @$file->document->property->property_name }} 
+                                                    </span></br>
                                                     <a href="{{ url($file->file) }}" target="_blank">
                                                       <p> {{ @$file->name }} </p>
                                                       <img class="avatar border-gray" src="{{ asset('img/pdf.png') }}">
-                                                      </a>                   
+                                                      </a> 
+                                                       <span class="doc-type"> 
+                                                      {{  @$file->document->document_type->name }}</span>              
                                                    </div>
                                                 </div>
                                              </div>
@@ -273,6 +278,11 @@ span.cross{
     right: 30px;
     display: none;
 }
+span.doc-type{
+ font-size: 12px;
+ padding-top: 8px;
+ display: block;
+}
 tr:hover span.cross{
   display: block;
 }
@@ -282,6 +292,12 @@ button.btn.btn-neutral.bg-transparent.btn-icon{
 td{
   width: 100%;
 }
+span.doc_type_m{
+ font-size: 10px;
+ padding-top: 3px;
+ display: block;
+}
+
 
 .add_button {
     height: 35px;
