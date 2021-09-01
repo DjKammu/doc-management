@@ -144,9 +144,9 @@ class DocumentController extends Controller
                $filesArr = [];
                $files = $request->file('file');
                $name = $request->name;
-               $date = int @$request->date ?? 0;
-               $month = int @$request->month ?? 0;
-               $year = int @$request->year ?? 0;
+               $date = $request->filled('date')  ? ( $request->date) : 0;
+               $month = $request->filled('month')  ?  $request->month : 0;
+               $year = $request->filled('year')  ?  $request->year : date('Y');
 
                foreach ($files as $key => $file) {
                   $fileName = \Str::slug($name).'-'.time().$key.'.'. $file->getClientOriginalExtension();
