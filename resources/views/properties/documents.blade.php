@@ -164,7 +164,7 @@
        let isPerpage = '{{ Request::input("per_page")}}';
 
        if(!isPerpage){
-         window.location.href = fullUrl+'&per_page='+perPage;
+         window.location.href = fullUrl+(fullUrl.includes('?')?'&':'?')+'per_page='+perPage;
        }
        else if(isPerpage != perPage){
          window.location.href = fullUrl.replace(isPerpage, perPage)
