@@ -13,6 +13,16 @@
                     <div class="col-6">
                         <h4 class="mt-0 text-left">Search Document</h4>
                     </div>
+                    <div class="col-6 text-right">
+                      <label>Per Page </label>
+                      <select style="height: 26px;" name="per_page"  onchange="selectPerpage(this.value)"> 
+                        <option value="">Per Page</option>
+                        <option value="25" {{ (request()->per_page == 25) ? 'selected' : ''}}>25</option>
+                        <option value="50" {{ (request()->per_page == 50) ? 'selected' : ''}}>50</option>
+                        <option value="100" {{ (request()->per_page == 100) ? 'selected' : ''}}> 100</option>
+                        <option value="150" {{ (request()->per_page == 150) ? 'selected' : ''}}>150</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div class="row mb-2">
@@ -71,7 +81,9 @@
 
                           </select>
 
-                        <input type="text" name="s" value="{{ @request()->s }}" id="inputSearch" >
+                        <input type="text" name="s" value="{{ @request()->s }}" 
+                        id="inputSearch" >
+                        <input type="hidden"  name="per_page" value="{{ @request()->per_page }}">
                         <button type="submit" id="search">Search</button>
                         </form>
                     </div>
@@ -115,9 +127,9 @@
                                                  <a  href="{{ ($document->file) ? $document->file : route('properties.documents.show', ['id' => request()->property, 'document' => $document->id ]) }}" {{ ($document->file) ? 'target="_blank"' : '' }} >
                                                   <img class="avatar border-gray" src="{{ asset('img/'.$extension.'.png') }}">  
                                                    </a>
-                                                  <!-- <a href="/properties/{{ \Str::slug($document->document->property->id)}}/documents/{{ $document->id }}">   -->                   
+                                                  <a href="/properties/{{ \Str::slug($document->document->property->id)}}/documents/{{ $document->document->id }}" target="_blank">                     
                                                   <h6 class="title mb-0">{{ @$document->name ?? @$document->document->name }}</h6>
-                                                   <!-- </a> -->
+                                                   </a>
                                                    <span class="doc-type"> 
                                                     {{  @$document->document->document_type->name }}</span>
                                                     <span class="doc_type_m">{{ (!$document->file) ? 'Multiple' : '' }} </span>
@@ -144,6 +156,23 @@
 @endsection
 
 @section('pagescript')
+
+<script type="text/javascript">
+  
+   function selectPerpage(perPage){
+       var fullUrl = window.location.href;
+       let isPerpage = '{{ Request::input("per_page")}}';
+
+       if(!isPerpage){
+         window.location.href = fullUrl+'&per_page='+perPage;
+       }
+       else if(isPerpage != perPage){
+         window.location.href = fullUrl.replace(isPerpage, perPage)
+       }
+  } 
+
+
+</script>
 
 <style type="text/css">
   

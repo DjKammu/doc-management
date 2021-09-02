@@ -467,7 +467,9 @@ class DocumentController extends Controller
             ->orWhere('year', 'LIKE', "%{$searchTerm}%");
          }  
 
-         $documents = $documents->with('document')->paginate((new DocumentFile())->perPage);
+         $perPage = request()->filled('per_page') ? request()->per_page : (new DocumentFile())->perPage;
+
+         $documents = $documents->with('document')->paginate($perPage);
 
        $documents->filter(function($doc){
          
