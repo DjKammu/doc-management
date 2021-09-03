@@ -127,7 +127,7 @@
                                                  <a  href="{{ ($document->file) ? $document->file : route('properties.documents.show', ['id' => request()->property, 'document' => $document->id ]) }}" {{ ($document->file) ? 'target="_blank"' : '' }} >
                                                   <img class="avatar border-gray" src="{{ asset('img/'.$extension.'.png') }}">  
                                                    </a>
-                                                  <a href="/properties/{{ \Str::slug($document->document->property->id)}}/documents/{{ $document->document->id }}" target="_blank">                     
+                                                  <a href="{{url()}}./properties/{{ \Str::slug($document->document->property->id)}}/documents/{{ $document->document->id }}" target="_blank">                     
                                                   <h6 class="title mb-0">{{ @$document->name ?? @$document->document->name }}</h6>
                                                    </a>
                                                    <span class="doc-type"> 
