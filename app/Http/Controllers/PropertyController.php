@@ -55,7 +55,9 @@ class PropertyController extends Controller
          
          $propertyTypes = ProprtyType::all(); 
 
-         $properties = $properties->paginate((new Property())->perPage);
+         $perPage = request()->filled('per_page') ? request()->per_page : (new Property())->perPage;
+
+         $properties = $properties->paginate($perPage);
 
          return view('properties.index',compact('properties','propertyTypes'));
     }
@@ -149,9 +151,11 @@ class PropertyController extends Controller
                 $q->where('slug', $p);
             });
          } 
+          
+         $perPage = request()->filled('per_page') ? request()->per_page : (new Property())->perPage;
 
          $documents = $documents->with('document_type')
-                    ->paginate((new Property())->perPage);
+                    ->paginate($perPage);
 
         $documents->filter(function($doc){
 

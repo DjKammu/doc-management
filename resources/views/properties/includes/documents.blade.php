@@ -12,9 +12,6 @@
 
     <div class="row mb-2">
         <div class="col-6">
-            
-        </div>
-        <div class="col-6 text-right">
             <select style="height: 26px;" onchange="return window.location.href = '?p='+this.value"> 
             <option value="">Select Documents Type</option>
             @foreach($documentTypes as $type)
@@ -23,6 +20,16 @@
             </select>
             <input type="text" name="s" value="{{ @request()->s }}" id="inputSearch" >
             <button id="search">Search</button>
+        </div>
+        <div class="col-6 text-right">
+            <label>Per Page </label>
+            <select style="height: 26px;" name="per_page"  onchange="selectPerpage(this.value)"> 
+              <option value="">Per Page</option>
+              <option value="25" {{ (request()->per_page == 25) ? 'selected' : ''}}>25</option>
+              <option value="50" {{ (request()->per_page == 50) ? 'selected' : ''}}>50</option>
+              <option value="100" {{ (request()->per_page == 100) ? 'selected' : ''}}> 100</option>
+              <option value="150" {{ (request()->per_page == 150) ? 'selected' : ''}}>150</option>
+              </select>
         </div>
     </div>
     <!-- Categories Table -->
@@ -105,6 +112,42 @@
 </div>
 
 @section('pagescript')
+
+<script type="text/javascript">
+
+  
+  $(document).ready(function(){
+
+  $('#search').click(function(){
+        var search = $('#inputSearch').val();
+
+        if(!search){
+         // alert('Please enter to search');
+        }
+        window.location.href = '?s='+search;
+  });
+
+  $(document).keyup(function(event) {
+    if (event.keyCode === 13) {
+        $("#search").click();
+    }
+});
+  });
+  
+   function selectPerpage(perPage){
+       var fullUrl = window.location.href;
+       let isPerpage = '{{ Request::input("per_page")}}';
+
+       if(!isPerpage){
+         window.location.href = fullUrl+(fullUrl.includes('?')?'&':'?')+'per_page='+perPage;
+       }
+       else if(isPerpage != perPage){
+         window.location.href = fullUrl.replace(isPerpage, perPage)
+       }
+  } 
+
+
+</script>
 
 <style type="text/css">
   

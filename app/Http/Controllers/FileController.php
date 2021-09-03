@@ -18,6 +18,7 @@ class FileController extends Controller
     CONST PROPERTY = 'property';
     CONST FILES = 'files';
     CONST ARCHIVED = 'archived';
+    CONST DOC_UPLOAD = 'doc_upload';
 
     /**
      * Create a new controller instance.
@@ -161,7 +162,7 @@ class FileController extends Controller
 
     public function getDirectoies($dir, $rescurive = false, $dirname = null){
 
-        $directories = \Storage::disk('doc_upload')->listContents($dir,$rescurive);
+        $directories = \Storage::disk(self::DOC_UPLOAD)->listContents($dir,$rescurive);
  
         if($dirname) {
             $directories = collect($directories)->where('dirname',$dirname)->all();

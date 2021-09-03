@@ -9,6 +9,7 @@ use App\Models\ProprtyType;
 use App\Models\DocumentType;
 use App\Models\Property;
 use Auth;
+use App\Http\Controllers\FileController;
 
 class HomeController extends Controller
 {
@@ -35,8 +36,13 @@ class HomeController extends Controller
         $roles = Role::count();
         $documentTypes = DocumentType::count();
 
+        $files = \Storage::disk(FileController::DOC_UPLOAD)
+                 ->allFiles(FileController::PROPERTY);
+
+        $files = @count($files);
+
         return view('home',compact('propertyTypes','documentTypes','properties',
-            'users','roles'));
+            'users','roles','files'));
     }
 
     /**
