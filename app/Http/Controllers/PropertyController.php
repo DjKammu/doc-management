@@ -7,6 +7,7 @@ use App\Models\DocumentType;
 use App\Models\Document;
 use App\Models\ProprtyType;
 use App\Models\Property;
+use App\Models\Tenant;
 use Gate;
 
 
@@ -138,6 +139,7 @@ class PropertyController extends Controller
          $property = Property::find($id);
          $documentTypes = DocumentType::all();
          $documents = $property->documents();
+         $tenants = Tenant::all();
 
          if(request()->filled('s')){
             $searchTerm = request()->s;
@@ -145,13 +147,18 @@ class PropertyController extends Controller
             ->orWhere('slug', 'LIKE', "%{$searchTerm}%");
          }  
 
-          if(request()->filled('p')){
-            $p = request()->p;
-            $documents->whereHas('document_type', function($q) use ($p){
-                $q->where('slug', $p);
-            });
+         if(request()->filled('document_type')){
+                $document_type = request()->document_type;
+                $documents->whereHas('document_type', function($q) use ($document_type){
+                    $q->where('slug', $document_type);
+                });
+         }
+
+         if(request()->filled('tenant')){
+                $tenant = request()->tenant;
+                $documents->where('tenant_id', $tenant);
          } 
-          
+              
          $perPage = request()->filled('per_page') ? request()->per_page : (new Property())->perPage;
 
          $documents = $documents->with('document_type')
@@ -185,7 +192,7 @@ class PropertyController extends Controller
 
 
          return view('properties.edit',compact('propertyTypes','property',
-            'documentTypes','documents'));
+            'documentTypes','documents','tenants'));
     }
 
     /**

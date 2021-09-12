@@ -11,17 +11,7 @@
     </div>
 
     <div class="row mb-2">
-        <div class="col-6">
-            <select style="height: 26px;" onchange="return window.location.href = '?p='+this.value"> 
-            <option value="">Select Documents Type</option>
-            @foreach($documentTypes as $type)
-               <option value="{{ $type->slug }}" {{ (@request()->p == $type->slug) ? 'selected' : ''}}> {{ $type->name }}</option>
-            @endforeach
-            </select>
-            <input type="text" name="s" value="{{ @request()->s }}" id="inputSearch" >
-            <button id="search">Search</button>
-        </div>
-        <div class="col-6 text-right">
+        <div class="col-12 text-right">
             <label>Per Page </label>
             <select style="height: 26px;" name="per_page"  onchange="selectPerpage(this.value)"> 
               <option value="">Per Page</option>
@@ -30,6 +20,28 @@
               <option value="100" {{ (request()->per_page == 100) ? 'selected' : ''}}> 100</option>
               <option value="150" {{ (request()->per_page == 150) ? 'selected' : ''}}>150</option>
               </select>
+        </div>
+    </div>
+
+     <div class="row mb-2">
+        <div class="col-12">
+            <form>
+            <select style="height: 26px;" name="document_type" > 
+            <option value="">Select Documents Type</option>
+            @foreach($documentTypes as $type)
+               <option value="{{ $type->slug }}" {{ (@request()->p == $type->slug) ? 'selected' : ''}}> {{ $type->name }}</option>
+            @endforeach
+            </select>
+            <select style="height: 26px;" name="tenant"> 
+              <option value="">Select Tenant</option>
+              @foreach($tenants as $tenant)
+                 <option value="{{ $tenant->id }}" {{ (@request()->tenant == $tenant->id) ? 'selected' : ''}}> {{ $tenant->name }}</option>
+              @endforeach
+            </select>
+            <input type="text" name="s" value="{{ @request()->s }}" id="inputSearch" >
+            <input type="hidden"  name="per_page" value="{{ @request()->per_page }}">
+            <button id="search">Search</button>
+          </form>
         </div>
     </div>
     <!-- Categories Table -->
