@@ -40,6 +40,13 @@
                            <option value="{{ $property->id }}" {{ (@request()->property == $property->id) ? 'selected' : ''}}> {{ $property->property_name }}</option>
                         @endforeach
                         </select>
+
+                        <select style="height: 26px;" name="tenant"> 
+                        <option value="">Select Tenant</option>
+                        @foreach($tenants as $tenant)
+                           <option value="{{ $tenant->id }}" {{ (@request()->tenant == $tenant->id) ? 'selected' : ''}}> {{ $tenant->name }}</option>
+                        @endforeach
+                        </select>
                         <select style="height: 26px;" name="document_type"> 
                         <option value="">Select Document Type</option>
                         @foreach($documentTypes as $type)

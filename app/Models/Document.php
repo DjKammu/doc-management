@@ -16,7 +16,7 @@ class Document extends Model
 
      protected $fillable = [
      'name' , 'slug' ,'account_number',
-     'file','property_id',
+     'file','property_id','tenant_id',
      'document_type_id'
     ];
 

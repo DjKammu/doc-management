@@ -29,6 +29,8 @@
                         </button>
                         <button type="button" class="btn btn-danger mt-0"  onclick="return window.location.href='{{ route("bussiness-types.index") }}'">Bussiness Types
                         </button>
+                        <button type="button" class="btn btn-danger mt-0"  onclick="return window.location.href='{{ route("tenants.index") }}'">Tenants
+                        </button>
                     </div>
                 </div>
 

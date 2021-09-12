@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Collection;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use App\Models\DocumentType;
@@ -9,6 +10,7 @@ use App\Models\DocumentFile;
 use App\Models\ProprtyType;
 use App\Models\Property;
 use App\Models\Document;
+use App\Models\Tenant;
 use Gate;
 
 
@@ -77,7 +79,9 @@ class DocumentController extends Controller
 
         $documentsTypes = DocumentType::all(); 
 
-        return view('properties.documents-create',compact('documentsTypes'));
+        $tenants = Property::find($id)->tenants()->get();
+
+        return view('properties.documents-create',compact('documentsTypes','tenants'));
     }
 
     /**
@@ -180,6 +184,8 @@ class DocumentController extends Controller
 
         $property = @$document->property()->first();
         
+        $tenants = $property->tenants()->get();
+        
         $property_slug = \Str::slug($property->property_name);
 
         $document_type = $document->document_type()->pluck('slug')->first();
@@ -194,13 +200,14 @@ class DocumentController extends Controller
 
        $document->files->filter(function($file) use ($folderPath){
 
-        $file->file = ($folderPath.$file->file);
+          $file->file = ($folderPath.$file->file);
 
-         return $file->file;
-       
-     });
+           return $file->file;
+         
+       });
 
-      return view('properties.documents-edit',compact('documentsTypes','document'));
+      return view('properties.documents-edit',compact('documentsTypes','document',
+        'tenants'));
 
     }
 
@@ -439,12 +446,20 @@ class DocumentController extends Controller
          $propertyTypes = ProprtyType::all(); 
          $documentTypes = DocumentType::all(); 
          $properties = Property::all();
+         $tenants = Tenant::all();
 
          $docsIds =    ($docsIds) ? @$docsIds->unique() : []; 
 
          if($docsIds){
             $documents->docIds($docsIds);
          }
+
+         if(request()->filled('tenant')){
+
+           $documents = $documents->whereHas('document', function ($query) {
+                  $query->where('tenant_id', request()->tenant);
+           });
+         } 
 
          if(request()->filled('year')){
            $documents = $documents->where('year',request()->year);
@@ -496,7 +511,7 @@ class DocumentController extends Controller
          //dd($documents);
 
          return view('properties.documents',compact('documents','propertyTypes',
-          'properties','documentTypes'));
+          'properties','documentTypes','tenants'));
     }
 
 
