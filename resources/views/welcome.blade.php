@@ -39,9 +39,9 @@
                                 </span>
                             @enderror
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <a href="{{ route('password.request') }}" class="text-muted pull-right">Forgot Password?</a>
-                </div>
+                </div> -->
             </div>
             <div class="card-footer ">
                 <button type="submit" class="btn btn-warning btn-round btn-block mb-3">Login</button>

@@ -2,7 +2,6 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,6 +13,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('login',[App\Http\Controllers\API\LoginController::class,'login']);
+
+Route::middleware('auth:api')->group( function() {
+  
+  Route::get('/user', function (Request $request) {
+	    return $request->user();
+	});
+
+   Route::get('/properties',[App\Http\Controllers\API\PropertyController::class,'index']);
+   Route::get('/documents',[App\Http\Controllers\API\DocumentController::class,'index']);
+
+});
+
+
+Route::fallback(function () {
+    return response()->json(['message' => 'Not Found!'], 404);
 });
