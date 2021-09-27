@@ -40,8 +40,17 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-         $this->validateLogin($request);
+          $validator = \Validator::make($request->all(), [
+            $this->username() => 'required|string',
+            'password' => 'required'
+           ]);
 
+          if ($validator->fails()) {
+              return response()->json([
+              'status' => 401,
+              'message' =>  @$validator->errors()->first()
+              ]);
+          }
 
         if (!$this->attemptLogin($request)) {
              return response()->json([
