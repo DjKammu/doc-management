@@ -41,7 +41,7 @@ class PropertyCollection extends ResourceCollection
              'country' => (string) $data->country,
              'zipCode' => (string) $data->zip_code,
              'notes'   => (string) $data->notes,
-             'propertyType ' => (string) $data->proprty_type->name,
+             'propertyType' => (string) $data->proprty_type->name,
              'imageUrl'   => (string) url(\Storage::url($data->photo))
             ];
         }); 

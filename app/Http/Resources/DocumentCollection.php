@@ -36,13 +36,13 @@ class DocumentCollection extends ResourceCollection
              'id'       => (int) $data->id,
              'name'     => (string) ($data->name) ? $data->name 
                           :@$data->document->document_type()->first()->name,
-             'tenant '  => (string) @$data->document->tenant()->first()->name,
+             'tenant'  => (string) @$data->document->tenant()->first()->name,
              'fileName' => (string) $data->name,
              'year'     => (string) $data->year,
              'month'    => (string) $data->month,
              'date'     => (string) $data->year.'-'.sprintf("%02d", $data->month)
                          .'-'.sprintf("%02d", $data->date),
-             'docUrl '  => (string) $data->file
+             'docUrl'  => (string) $data->file
             ];
         }); 
 
