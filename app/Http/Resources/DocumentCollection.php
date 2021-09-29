@@ -32,17 +32,25 @@ class DocumentCollection extends ResourceCollection
     public function getCollection($collection){
          
         $collection->transform(function ($data) {
+            $fileInfo = pathinfo($data->file);
+            $fileName = @$fileInfo['filename'];
+            $extension = @$fileInfo['extension'];
+
             return [
              'id'       => (int) $data->id,
              'name'     => (string) ($data->name) ? $data->name 
                           :@$data->document->document_type()->first()->name,
-             'tenant'  => (string) @$data->document->tenant()->first()->name,
-             'fileName' => (string) $data->name,
+             'tenant'   => (string) @$data->document->tenant()->first()->name,
              'year'     => (string) $data->year,
              'month'    => (string) $data->month,
              'date'     => (string) $data->year.'-'.sprintf("%02d", $data->month)
                          .'-'.sprintf("%02d", $data->date),
-             'docUrl'  => (string) $data->file
+             'docUrl'   => (string) $data->file,
+             'fileName' => (string) $fileName,
+             'extension'     => (string) $extension,
+             'documentType'  => (string) @$data->document->document_type()->first()->name,
+             'propertyType'  => (string) @$data->document->property->proprty_type()
+                                ->first()->name,
             ];
         }); 
 

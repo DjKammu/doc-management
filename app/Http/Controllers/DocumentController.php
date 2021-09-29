@@ -503,7 +503,7 @@ class DocumentController extends Controller
 
         $doc->file = url($folderPath.$doc->file);
 
-         return $doc->file;
+        return $doc->file;
        
      });
 
