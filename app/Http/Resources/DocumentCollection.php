@@ -41,6 +41,7 @@ class DocumentCollection extends ResourceCollection
              'name'     => (string) ($data->name) ? $data->name 
                           :@$data->document->document_type()->first()->name,
              'tenant'   => (string) @$data->document->tenant()->first()->name,
+             'property' => (string) @$data->document->property()->first()->property_name,
              'year'     => (string) $data->year,
              'month'    => (string) $data->month,
              'date'     => (string) $data->year.'-'.sprintf("%02d", $data->month)
