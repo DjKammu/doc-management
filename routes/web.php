@@ -98,3 +98,4 @@ Route::delete('files', [App\Http\Controllers\FileController::class,'destroy'])->
 Route::resource('bussiness-types', App\Http\Controllers\BussinessTypeController::class);
 
 Route::resource('tenants', App\Http\Controllers\TenantController::class);
+Route::resource('vendors', App\Http\Controllers\VendorController::class);
