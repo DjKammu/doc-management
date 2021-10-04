@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Tenant;
+use App\Models\Vendor;
 use App\Models\Property;
 use App\Models\BussinessType;
 use Gate;
 
 
-class TenantController extends Controller
+class VendorController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -32,9 +32,10 @@ class TenantController extends Controller
                return abort('401');
          } 
          
-         $properties =  Property::all();
+        $properties =  Property::all();
 
-          $tenants = Tenant::with('property')->orderBy('name');
+         $vendors = Vendor::with('property')->orderBy('name');
+
 
          if(request()->filled('property')){
             $property = request()->property;
@@ -44,11 +45,11 @@ class TenantController extends Controller
          } 
          
          $perPage = request()->filled('per_page') ? request()->per_page : 
-         (new Tenant())->perPage;
-
-         $tenants = $tenants->paginate($perPage); 
+         (new Vendor())->perPage;
+ 
+        $vendors = $vendors->paginate((new Vendor())->perPage); 
          
-         return view('tenants.index',compact('tenants','properties'));
+         return view('vendors.index',compact('vendors','properties'));
     }
 
     /**
@@ -64,7 +65,7 @@ class TenantController extends Controller
 
         $properties =  Property::all();
 
-        return view('tenants.create',compact('properties'));
+        return view('vendors.create',compact('properties'));
     }
 
     /**
@@ -82,13 +83,13 @@ class TenantController extends Controller
         $data = $request->except('_token');
 
         $request->validate([
-              'name' => 'required|unique:tenants',
+              'name' => 'required|unique:vendors',
               'property_id' => 'required|exists:properties,id',
         ]);
             
-        Tenant::create($data);
+        Vendor::create($data);
 
-        return redirect('tenants')->with('message', 'Tenant Created Successfully!');
+        return redirect('vendors')->with('message', 'Vendor Created Successfully!');
     }
 
     /**
@@ -103,10 +104,10 @@ class TenantController extends Controller
                return abort('401');
           } 
 
-         $tenant = Tenant::find($id);
+         $vendor = Vendor::find($id);
          $properties =  Property::all();
          
-         return view('tenants.edit',compact('tenant','properties'));
+         return view('vendors.edit',compact('vendor','properties'));
     }
 
     /**
@@ -136,20 +137,20 @@ class TenantController extends Controller
         $data = $request->except('_token');
 
         $request->validate([
-              'name' => 'required|unique:tenants,name,'.$id,
+              'name' => 'required|unique:vendors,name,'.$id,
               'property_id' => 'required|exists:properties,id'
         ]);
 
 
-        $type = Tenant::find($id);
+        $vendor = Vendor::find($id);
         
-         if(!$type){
+         if(!$vendor){
             return redirect()->back();
          }
           
-         $type->update($data);
+         $vendor->update($data);
 
-        return redirect('tenants')->with('message', 'Tenant Updated Successfully!');
+        return redirect('vendors')->with('message', 'Vendor Updated Successfully!');
     }
 
     /**
@@ -164,8 +165,8 @@ class TenantController extends Controller
                return abort('401');
           } 
 
-         Tenant::find($id)->delete();
+         Vendor::find($id)->delete();
 
-        return redirect()->back()->with('message', 'Tenant Delete Successfully!');
+        return redirect()->back()->with('message', 'Vendor Delete Successfully!');
     }
 }

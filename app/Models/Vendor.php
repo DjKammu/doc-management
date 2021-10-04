@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Vendor extends Model
 {
     use HasFactory;
+
+    protected $perPage = 20;
+
+    protected $fillable = [
+     'name' , 'property_id'
+    ];
+    
+    function property(){
+    	return $this->hasOne(Property::class,'id','property_id');
+    	// return $this->belongsTo(Property::class,'property_id','id');
+    }
 }

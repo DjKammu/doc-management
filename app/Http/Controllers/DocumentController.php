@@ -11,6 +11,7 @@ use App\Models\ProprtyType;
 use App\Models\Property;
 use App\Models\Document;
 use App\Models\Tenant;
+use App\Models\Vendor;
 use Gate;
 
 
@@ -79,9 +80,13 @@ class DocumentController extends Controller
 
         $documentsTypes = DocumentType::all(); 
 
-        $tenants = Property::find($id)->tenants()->get();
+        $propery = Property::find($id);
 
-        return view('properties.documents-create',compact('documentsTypes','tenants'));
+        $tenants = $propery->tenants()->get();
+        $vendors = $propery->vendors()->get();
+
+        return view('properties.documents-create',compact('documentsTypes','tenants',
+          'vendors'));
     }
 
     /**
@@ -185,6 +190,8 @@ class DocumentController extends Controller
         $property = @$document->property()->first();
         
         $tenants = $property->tenants()->get();
+
+        $vendors = $property->vendors()->get();
         
         $property_slug = \Str::slug($property->property_name);
 
@@ -207,7 +214,7 @@ class DocumentController extends Controller
        });
 
       return view('properties.documents-edit',compact('documentsTypes','document',
-        'tenants'));
+        'tenants','vendors'));
 
     }
 
@@ -447,6 +454,7 @@ class DocumentController extends Controller
          $documentTypes = DocumentType::all(); 
          $properties = Property::all();
          $tenants = Tenant::all();
+         $vendors = Vendor::all();
 
          $docsIds =    ($docsIds) ? @$docsIds->unique() : []; 
 
@@ -458,6 +466,13 @@ class DocumentController extends Controller
 
            $documents = $documents->whereHas('document', function ($query) {
                   $query->where('tenant_id', request()->tenant);
+           });
+         }  
+
+         if(request()->filled('vendor')){
+
+           $documents = $documents->whereHas('document', function ($query) {
+                  $query->where('vendor_id', request()->vendor);
            });
          } 
 
@@ -508,10 +523,8 @@ class DocumentController extends Controller
      });
 
 
-         //dd($documents);
-
          return view('properties.documents',compact('documents','propertyTypes',
-          'properties','documentTypes','tenants'));
+          'properties','documentTypes','tenants','vendors'));
     }
 
 

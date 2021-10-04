@@ -17,7 +17,7 @@ class Document extends Model
      protected $fillable = [
      'name' , 'slug' ,'account_number',
      'file','property_id','tenant_id',
-     'document_type_id'
+     'vendor_id','document_type_id'
     ];
 
 
@@ -32,6 +32,10 @@ class Document extends Model
 
      public function tenant(){
         return $this->belongsTo(Tenant::class);
+    }
+
+    public function vendor(){
+        return $this->belongsTo(Vendor::class);
     }
 
     public function files(){

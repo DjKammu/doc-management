@@ -40,7 +40,7 @@ class PropertyController extends Controller
          } 
          
 
-         $perPage = request()->filled('per_page') ? request()->per_page : (new Property())->perPage;
+         $perPage = request()->filled('per_page') ? request()->per_page : Property::API_PER_PAGE;
 
          $properties = $properties->with('proprty_type')->paginate($perPage);
 

@@ -11,6 +11,8 @@ class Property extends Model
 
     protected $perPage = 9;
 
+    CONST API_PER_PAGE = 20;
+
     protected $fillable = [
      'property_name' , 'property_address' ,'city',
      'state' , 'country' ,'zip_code' , 'notes' ,'photo','proprty_type_id'
@@ -26,6 +28,10 @@ class Property extends Model
 
     public function tenants(){
         return $this->hasMany(Tenant::class);
+    }
+
+    public function vendors(){
+        return $this->hasMany(Vendor::class);
     }
     
 }

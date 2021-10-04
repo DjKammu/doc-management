@@ -87,6 +87,24 @@
                                         </div>
                                     </div>
 
+                                     <div class="row">
+                                        <div class="col-lg-5 col-md-6 mx-auto">
+                                            <div class="form-group">
+                                                <label class="text-dark" for="password">
+                                                  Vendor
+                                                </label>
+                                                <select class="form-control" id="year" 
+                                                name="vendor_id"> 
+                                                  <option value=""> Select Vendor</option>
+                                                    @foreach($vendors as $vendor)
+                                                     <option value="{{ $vendor->id }}" > {{ $vendor->name }}</option>
+                                                  @endforeach
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div class="row">
                                         <div class="col-lg-5 col-md-6 mx-auto">
                                             <div class="form-group">

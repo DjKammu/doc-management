@@ -15,6 +15,10 @@ class CreateVendorsTable extends Migration
     {
         Schema::create('vendors', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->reuired();
+            $table->unsignedBigInteger('property_id');
+            $table->foreign('property_id')->references('id')->on('properties')
+            ->onDelete('cascade');
             $table->timestamps();
         });
     }

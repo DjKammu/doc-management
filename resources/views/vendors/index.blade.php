@@ -1,6 +1,6 @@
 @extends('layouts.admin-app')
 
-@section('title', 'Tenants')
+@section('title', 'Vendors')
 
 @section('content')
       <!-- Start Main View -->
@@ -26,14 +26,15 @@
             <div class="card-body">
                 <div class="row mb-2">
                     <div class="col-6">
-                        <h4 class="mt-0 text-left">Tenants List</h4>
+                        <h4 class="mt-0 text-left">Vendors List</h4>
                     </div>
                     <div class="col-6 text-right">
-                        <button type="button" class="btn btn-danger mt-0"  onclick="return window.location.href='{{ route("tenants.create")}}'">Add Tenant
+                        <button type="button" class="btn btn-danger mt-0"  onclick="return window.location.href='{{ route("vendors.create")}}'">Add Vendor
                         </button>
                     </div>
                 </div>
-                  <div class="row mb-2">
+
+                <div class="row mb-2">
                     <div class="col-6">
                        <select style="height: 26px;" onchange="return window.location.href = '?property='+this.value"> 
                       <option>Select Property </option>
@@ -58,24 +59,24 @@
                     <table id="project-types-table" class="table table-hover text-center">
                         <thead>
                         <tr class="text-danger">
-                            <th>Tenant</th>
+                            <th>Vendor</th>
                             <th>Property</th>
                             <th>Edit</th>
                             <th>Delete</th>
                         </tr>
                         </thead>
                         <tbody>
-                          @foreach($tenants as $tenant)
+                          @foreach($vendors as $tenant)
                          <tr>
                            <td>{{ $tenant->name }}</td>
                            <td>{{ @$tenant->property->property_name }}</td>
                            <td>        
-                            <button onclick="return window.location.href='tenants/{{$tenant->id}}'" rel="tooltip" class="btn btn-neutral bg-transparent btn-icon" data-original-title="Edit Bussiness Type" title="Edit Bussiness Type">            <i class="fa fa-edit text-success"></i>        </button> 
+                            <button onclick="return window.location.href='vendors/{{$tenant->id}}'" rel="tooltip" class="btn btn-neutral bg-transparent btn-icon" data-original-title="Edit Bussiness Type" title="Edit Bussiness Type">            <i class="fa fa-edit text-success"></i>        </button> 
                           </td>
                           <td>
                              <form 
                               method="post" 
-                              action="{{route('tenants.destroy',$tenant->id)}}"> 
+                              action="{{route('vendors.destroy',$tenant->id)}}"> 
                                @csrf
                               {{ method_field('DELETE') }}
 
@@ -91,7 +92,7 @@
                         </tbody>
                     </table>
                 </div>
-                 {!! $tenants->render() !!}
+                 {!! $vendors->render() !!}
             </div>
         </div>
     </div>

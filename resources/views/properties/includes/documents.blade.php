@@ -107,6 +107,11 @@
                                     <span class="doc_type_m">
                                       {{ (!$document->file) && $document->files()->exists() ? 'Multiple' : '' }}
                                     </span>
+
+                                    <span class="doc_type_m">{{ @$document->tenant->name }} 
+                                    </span>
+                                    <span class="doc_type_m">{{ @$document->vendor->name }} 
+                                    </span>
                                     
                                </div>
                             </div>

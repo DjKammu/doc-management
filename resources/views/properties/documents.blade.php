@@ -47,6 +47,12 @@
                            <option value="{{ $tenant->id }}" {{ (@request()->tenant == $tenant->id) ? 'selected' : ''}}> {{ $tenant->name }}</option>
                         @endforeach
                         </select>
+                        <select style="height: 26px;" name="vendor"> 
+                        <option value="">Select Vendor</option>
+                        @foreach($vendors as $vendor)
+                           <option value="{{ $vendor->id }}" {{ (@request()->vendor == $vendor->id) ? 'selected' : ''}}> {{ $vendor->name }}</option>
+                        @endforeach
+                        </select>
                         <select style="height: 26px;" name="document_type"> 
                         <option value="">Select Document Type</option>
                         @foreach($documentTypes as $type)
@@ -137,9 +143,14 @@
                                                   <a href="{{url('/')}}/properties/{{ \Str::slug($document->document->property->id)}}/documents/{{ $document->document->id }}" target="_blank">                     
                                                   <h6 class="title mb-0">{{ @$document->name ?? @$document->document->name }}</h6>
                                                    </a>
-                                                   <span class="doc-type"> 
+                                                    <span class="doc-type"> 
                                                     {{  @$document->document->document_type->name }}</span>
-                                                    <span class="doc_type_m">{{ (!$document->file) ? 'Multiple' : '' }} </span>
+                                                    <span class="doc_type_m">{{ (!$document->file) ? 'Multiple' : '' }}
+                                                    </span>
+                                                    <span class="doc_type_m">{{ @$document->document->tenant->name }} 
+                                                    </span>
+                                                    <span class="doc_type_m">{{ @$document->document->vendor->name }} 
+                                                    </span>
                                                     
                                                </div>
                                             </div>
