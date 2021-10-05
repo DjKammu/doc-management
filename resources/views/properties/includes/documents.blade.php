@@ -37,6 +37,12 @@
               @foreach($tenants as $tenant)
                  <option value="{{ $tenant->id }}" {{ (@request()->tenant == $tenant->id) ? 'selected' : ''}}> {{ $tenant->name }}</option>
               @endforeach
+            </select> 
+            <select style="height: 26px;" name="vendor"> 
+              <option value="">Select Vendor</option>
+              @foreach($vendors as $vendor)
+                 <option value="{{ $vendor->id }}" {{ (@request()->vendor == $vendor->id) ? 'selected' : ''}}> {{ $vendor->name }}</option>
+              @endforeach
             </select>
             <input type="text" name="s" value="{{ @request()->s }}" id="inputSearch" >
             <input type="hidden"  name="per_page" value="{{ @request()->per_page }}">

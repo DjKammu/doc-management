@@ -8,6 +8,7 @@ use App\Models\Document;
 use App\Models\ProprtyType;
 use App\Models\Property;
 use App\Models\Tenant;
+use App\Models\Vendor;
 use Gate;
 
 
@@ -140,6 +141,7 @@ class PropertyController extends Controller
          $documentTypes = DocumentType::all();
          $documents = $property->documents();
          $tenants = Tenant::all();
+         $vendors = Vendor::all();
 
          if(request()->filled('s')){
             $searchTerm = request()->s;
@@ -157,6 +159,11 @@ class PropertyController extends Controller
          if(request()->filled('tenant')){
                 $tenant = request()->tenant;
                 $documents->where('tenant_id', $tenant);
+         } 
+
+          if(request()->filled('vendor')){
+                $vendor = request()->vendor;
+                $documents->where('vendor_id', $vendor);
          } 
               
          $perPage = request()->filled('per_page') ? request()->per_page : (new Property())->perPage;
@@ -192,7 +199,7 @@ class PropertyController extends Controller
 
 
          return view('properties.edit',compact('propertyTypes','property',
-            'documentTypes','documents','tenants'));
+            'documentTypes','documents','tenants','vendors'));
     }
 
     /**
