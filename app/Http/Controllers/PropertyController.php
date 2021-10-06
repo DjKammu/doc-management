@@ -140,8 +140,8 @@ class PropertyController extends Controller
          $property = Property::find($id);
          $documentTypes = DocumentType::all();
          $documents = $property->documents();
-         $tenants = Tenant::all();
-         $vendors = Vendor::all();
+         $tenants = $property->tenants()->get();
+         $vendors = $property->vendors()->get();
 
          if(request()->filled('s')){
             $searchTerm = request()->s;
