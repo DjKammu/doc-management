@@ -178,8 +178,8 @@ class FileController extends Controller
                return abort('401');
           } 
 
-          $path = request()->path;
-
+          $path = public_path(request()->path);
+     
           @unlink($path);
 
          return redirect()->back()->with('message', 'File Delete Successfully!');
