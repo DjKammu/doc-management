@@ -169,6 +169,60 @@
                 </div>
             </div>
         </div>
+    </div>    
+
+       <!-- Files Overview -->
+    <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="card card-stats">
+            <div class="card-body ">
+                <div class="row">
+                    <div class="col-5 col-md-4">
+                        <div class="icon-big text-center icon-success">
+                            <i class="fa fa-industry text-success"></i>
+                        </div>
+                    </div>
+                    <div class="col-7 col-md-8">
+                        <div class="numbers">
+                            <p class="card-category">Vendors</p>
+                            <p id="files_count" class="card-title">{{ @$vendors }}<p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer ">
+                <hr>
+                <div class="stats">
+                    <a href="{{ route('vendors.index') }}" class="text-muted"><i class="fa fa-eye"></i> View All</a>
+                </div>
+            </div>
+        </div>
+    </div>    
+
+       <!-- Files Overview -->
+    <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="card card-stats">
+            <div class="card-body ">
+                <div class="row">
+                    <div class="col-5 col-md-4">
+                        <div class="icon-big text-center icon-warning">
+                            <i class="fa fa-sitemap text-warning"></i>
+                        </div>
+                    </div>
+                    <div class="col-7 col-md-8">
+                        <div class="numbers">
+                            <p class="card-category">Tenants</p>
+                            <p id="files_count" class="card-title">{{ @$tenants }}<p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer ">
+                <hr>
+                <div class="stats">
+                    <a href="{{ route('tenants.index') }}" class="text-muted"><i class="fa fa-eye"></i> View All</a>
+                </div>
+            </div>
+        </div>
     </div> 
 
      <!-- Files Overview -->

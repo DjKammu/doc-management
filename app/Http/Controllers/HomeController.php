@@ -8,6 +8,8 @@ use App\Models\Role;
 use App\Models\ProprtyType;
 use App\Models\DocumentType;
 use App\Models\Property;
+use App\Models\Tenant;
+use App\Models\Vendor;
 use Auth;
 use App\Http\Controllers\FileController;
 
@@ -35,6 +37,8 @@ class HomeController extends Controller
         $users = User::count();
         $roles = Role::count();
         $documentTypes = DocumentType::count();
+        $tenants = Tenant::count();
+        $vendors = Vendor::count();
 
         $files = \Storage::disk(FileController::DOC_UPLOAD)
                  ->allFiles(FileController::PROPERTY);
@@ -42,7 +46,7 @@ class HomeController extends Controller
         $files = @count($files);
 
         return view('home',compact('propertyTypes','documentTypes','properties',
-            'users','roles','files'));
+            'users','roles','files','tenants','vendors'));
     }
 
     /**
