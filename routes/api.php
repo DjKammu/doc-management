@@ -23,6 +23,7 @@ Route::middleware('auth:api')->group( function() {
 
    Route::get('/properties',[App\Http\Controllers\API\PropertyController::class,'index']);
    Route::get('/documents',[App\Http\Controllers\API\DocumentController::class,'index']);
+   Route::apiResource('document-types', App\Http\Controllers\API\DocumentTypeController::class);
 
 });
 
