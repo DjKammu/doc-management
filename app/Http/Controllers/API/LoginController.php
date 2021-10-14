@@ -61,6 +61,9 @@ class LoginController extends Controller
 
         $user = $request->user();
 
+       $permissions = @$user->roles[0]['permissions'];
+       $is_admin = $user->isAdmin($user);
+
         $token = \Str::random(60);
 
         $user->forceFill([
@@ -72,7 +75,9 @@ class LoginController extends Controller
             'message' =>  'Success',
             'data' =>  [
               'name' => $user->name,  
-              'token' => $token  
+              'token' => $token,
+              'is_admin' => $is_admin,
+              'permissions' => $permissions
             ]
         ]);
 

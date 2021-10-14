@@ -54,7 +54,10 @@ class User extends Authenticatable
      * Checks if User is Admin.
      */
      
-     public function isAdmin(){
+     public function isAdmin($user = []){
+        if($user){
+            return ($user->id == 1) ?? false;
+        }
         return (auth()->user()->id == 1) ?? false;
      }
 
