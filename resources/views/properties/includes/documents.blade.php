@@ -29,7 +29,7 @@
             <select style="height: 26px;" name="document_type" > 
             <option value="">Select Documents Type</option>
             @foreach($documentTypes as $type)
-               <option value="{{ $type->slug }}" {{ (@request()->p == $type->slug) ? 'selected' : ''}}> {{ $type->name }}</option>
+               <option value="{{ $type->slug }}" {{ (@request()->document_type == $type->slug) ? 'selected' : ''}}> {{ $type->name }}</option>
             @endforeach
             </select>
             <select style="height: 26px;" name="tenant"> 
