@@ -19,7 +19,7 @@
               <option value="50" {{ (request()->per_page == 50) ? 'selected' : ''}}>50</option>
               <option value="100" {{ (request()->per_page == 100) ? 'selected' : ''}}> 100</option>
               <option value="150" {{ (request()->per_page == 150) ? 'selected' : ''}}>150</option>
-              </select>
+            </select>
         </div>
     </div>
 
